@@ -2,6 +2,7 @@
 export const GET_ALL_BOOKS = 'GET_ALL_BOOKS'
 export const CREATE_BOOK = 'CREATE_BOOK'
 export const REMOVE_BOOK = 'REMOVE_BOOK'
+export const SEARCH_BOOK = 'SEARCH_BOOK'
 
 // ACTION TYPE AUTHOR
 export const GET_ALL_AUTHORS = 'GET_ALL_AUTHORS'
@@ -55,10 +56,18 @@ export type removeBookAction = {
   }
 }
 
+export type searchBookAction = {
+  type: typeof SEARCH_BOOK
+  payload: {
+    searchTerm: string
+  }
+}
+
 export type BookActions =
   | getAllBooksAction
   | createBookAction
   | removeBookAction
+  | searchBookAction
 
 export type BookState = {
   // should passed the author which have _id property too so that it is used while deleting the author
