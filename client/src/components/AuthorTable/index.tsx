@@ -24,10 +24,6 @@ import { AppState } from '../../types'
 
 export default function AuthorTable() {
   const [open, setOpen] = useState(false)
-  const [newFirstName, setNewFirstName] = useState('')
-  const [newLastName, setNewLastName] = useState('')
-  const [newDateOfBirth, setNewDateOfBirth] = useState('')
-  const [newBook, setNewBook] = useState('')
   const items = useSelector((state: AppState) => state.author.items)
   const dispatch = useDispatch()
 
@@ -39,20 +35,6 @@ export default function AuthorTable() {
     const item = items.find((author) => author._id === id)
     if (item) {
       dispatch(deleteAuthorThunk(item))
-    }
-  }
-
-  const handleEdit = (id: string) => {
-    const item = items.find((author) => author._id === id)
-    if (item) {
-      const updatedAuthor = {
-        ...item,
-        firstName: newFirstName,
-        lastName: newLastName,
-        dateOfBirth: newDateOfBirth,
-        book: newBook,
-      }
-      dispatch(editAuthorThunk(updatedAuthor))
     }
   }
   const handleClickOpen = () => {

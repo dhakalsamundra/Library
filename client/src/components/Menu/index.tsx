@@ -1,13 +1,8 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import clsx from 'clsx'
-import {
-  makeStyles,
-  useTheme,
-  Theme,
-  createStyles,
-} from '@material-ui/core/styles'
+import { useTheme } from '@material-ui/core/styles'
 import Drawer from '@material-ui/core/Drawer'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import AppBar from '@material-ui/core/AppBar'
@@ -29,11 +24,14 @@ import AuthorTable from '../AuthorTable'
 import { userSignOut } from '../../redux/actions/user'
 import { searchBook } from '../../redux/actions/book'
 import useStyles from './style'
+import { AppState } from '../../types'
 
 export default function PersistentDrawerLeft() {
   const classes = useStyles()
   const theme = useTheme()
   const [open, setOpen] = React.useState(false)
+
+  const searchedBook = useSelector((state: AppState) => state.book.filteredBook)
 
   const handleDrawerOpen = () => {
     setOpen(true)
@@ -83,18 +81,16 @@ export default function PersistentDrawerLeft() {
           <Typography variant="h6" noWrap>
             Library
           </Typography>
-          <Typography>
-            <InputBase
-              autoComplete="off"
-              placeholder="Search…"
-              onChange={handleNewSearchChange}
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </Typography>
+          <InputBase
+            autoComplete="off"
+            placeholder="Search…"
+            onChange={handleNewSearchChange}
+            classes={{
+              root: classes.inputRoot,
+              input: classes.inputInput,
+            }}
+            inputProps={{ 'aria-label': 'search' }}
+          />
           <Typography style={{ marginLeft: 'auto' }}>
             <GoogleLogout
               clientId="803700323785-2sld48q8at5i7v2rhj4s57d9gc294j42.apps.googleusercontent.com"

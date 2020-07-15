@@ -10,13 +10,14 @@ import {
 export default function book(
   state: BookState = {
     items: [],
+    filteredBook: [],
   },
   action: BookActions
 ): BookState {
   switch (action.type) {
     case GET_ALL_BOOKS: {
       const { books } = action.payload
-      return { ...state, items: books }
+      return { ...state, items: books, filteredBook: books }
     }
     case CREATE_BOOK: {
       const { book } = action.payload
@@ -29,12 +30,14 @@ export default function book(
     }
     case SEARCH_BOOK: {
       const { searchTerm } = action.payload
-      const searchedBook = state.items.filter((element: { title: string }) =>
-        element.title.toLowerCase().includes(searchTerm.toLowerCase())
-      )
+      // const searchedBook = state.items.filter((element: { title: string }) =>
+      //   element.title.toLowerCase().includes(searchTerm.toLowerCase())
+      // )
       return {
         ...state,
-        items: [...searchedBook],
+        filteredBook: state.items.filter((item) =>
+          item.title.toLowerCase().includes(searchTerm.toLowerCase())
+        ),
       }
     }
     default:

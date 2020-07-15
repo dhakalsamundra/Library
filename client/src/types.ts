@@ -16,7 +16,7 @@ export const SIGNOUT = 'SIGNOUT'
 
 // Book type
 export type Book = {
-  _id: string
+  _id: string | any
   title: string
   ISBN: string
   author: string
@@ -72,12 +72,13 @@ export type BookActions =
 export type BookState = {
   // should passed the author which have _id property too so that it is used while deleting the author
   items: Book[]
+  filteredBook: Book[]
 }
 
 // section of declaring the part of author
 
 export type Author = {
-  _id: string | any
+  _id: string
   firstName: string
   lastName: string
   dateOfBirth: Date | string

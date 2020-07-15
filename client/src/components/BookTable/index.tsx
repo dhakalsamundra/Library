@@ -9,18 +9,24 @@ import {
   IconButton,
 } from '@material-ui/core'
 import DeleteIcon from '@material-ui/icons/Delete'
-
+import EditIcon from '@material-ui/icons/Edit'
 import { deleteBookThunk } from '../../redux/actions'
 import { AppState } from '../../types'
 
 export default function BookTable() {
-  const items = useSelector((state: AppState) => state.book.items)
+  const items = useSelector((state: AppState) => state.book.filteredBook)
   const dispatch = useDispatch()
 
   const handleDelete = (id: string) => {
     const item = items.find((book) => book._id === id)
     if (item) {
       dispatch(deleteBookThunk(item))
+    }
+  }
+  const handleEdit = (id: string) => {
+    const item = items.find((book) => book._id === id)
+    if (item) {
+      // dispatch(editBookThunk(item))
     }
   }
   return (
@@ -55,15 +61,15 @@ export default function BookTable() {
                 <DeleteIcon />
               </IconButton>
             </TableCell>
-            {/* <TableCell>
-            <IconButton
+            <TableCell>
+              <IconButton
                 color="secondary"
                 aria-label="edit book"
                 onClick={() => handleEdit(book._id)}
               >
-                <DeleteIcon />
+                <EditIcon />
               </IconButton>
-            </TableCell> */}
+            </TableCell>
           </TableRow>
         </TableBody>
       ))}

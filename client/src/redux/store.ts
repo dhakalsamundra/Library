@@ -9,6 +9,7 @@ import rootSaga from './sagas'
 const initState: AppState = {
   book: {
     items: [],
+    filteredBook: [],
   },
   author: {
     items: [],
