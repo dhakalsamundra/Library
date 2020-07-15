@@ -5,7 +5,6 @@ import Menu from '../components/Menu'
 
 export default function Home() {
   const dispatch = useDispatch()
-
   useEffect(() => {
     dispatch(fetchBooksThunk())
   }, [dispatch])

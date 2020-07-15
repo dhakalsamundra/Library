@@ -66,8 +66,8 @@ export function deleteAuthorThunk(author: Author) {
   }
 }
 
-export function editAuthorThunk(author: Author) {
+export function editAuthorThunk(updateAuthor: Author) {
   return async (dispatch: Dispatch) => {
-    return AuthorService.updateAuthor(author, dispatch)
+    return AuthorService.updateAuthor(updateAuthor, dispatch)
   }
 }

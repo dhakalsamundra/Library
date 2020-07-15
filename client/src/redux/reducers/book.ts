@@ -4,6 +4,7 @@ import {
   GET_ALL_BOOKS,
   CREATE_BOOK,
   REMOVE_BOOK,
+  SEARCH_BOOK,
 } from '../../types'
 
 export default function book(
@@ -25,6 +26,16 @@ export default function book(
       const { book } = action.payload
       const newItems = state.items.filter((item) => item._id !== book._id)
       return { ...state, items: newItems }
+    }
+    case SEARCH_BOOK: {
+      const { searchTerm } = action.payload
+      const searchedBook = state.items.filter((element: { title: string }) =>
+        element.title.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+      return {
+        ...state,
+        items: [...searchedBook],
+      }
     }
     default:
       return state

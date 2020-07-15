@@ -83,7 +83,7 @@ export default function BookForm() {
   return (
     <div>
       <Button variant="contained" color="secondary" onClick={handleClickOpen}>
-        ADD OR UPDATE BOOK
+        ADD BOOK
       </Button>
       <Dialog
         open={open}
@@ -92,10 +92,7 @@ export default function BookForm() {
       >
         <DialogTitle id="form-dialog-title">Add new book</DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            Add new book to the library if it exists based on title, its details
-            will be updated
-          </DialogContentText>
+          <DialogContentText>Add new book to the library</DialogContentText>
           <form onSubmit={addBook}>
             <TextField
               id="outlined-full-width"
@@ -198,7 +195,7 @@ export default function BookForm() {
                 color="primary"
                 variant="contained"
               >
-                Add / Update Book
+                Add Book
               </Button>
             </DialogActions>
           </form>

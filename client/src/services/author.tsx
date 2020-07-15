@@ -1,5 +1,5 @@
-import axios from 'axios'
 import { Dispatch } from 'redux'
+import axios from 'axios'
 
 import {
   createAuthor,
@@ -46,11 +46,18 @@ const deleteAuthor = async (author: Author, dispatch: Dispatch) => {
 }
 
 const updateAuthor = async (author: Author, dispatch: Dispatch) => {
+  // const updatedAuthor = {
+  //   _id: item?._id,
+  //   firstName: newFirstName,
+  //   lastName: newLastName,
+  //   dateOfBirth: newDateOfBirth,
+  //   book: newBook,
+  // }
   try {
     const response = await axios({
       method: 'PUT',
       url: `${baseUrl}/${author._id}`,
-      data: author,
+      data: authorUpdate,
     })
     dispatch(authorUpdate(author))
   } catch (error) {

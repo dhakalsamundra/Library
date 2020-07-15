@@ -8,9 +8,11 @@ import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import EditIcon from '@material-ui/icons/Edit'
 
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { editAuthorThunk } from '../../redux/actions/author'
 import { AppState } from '../../types'
-import { addAuthorThunk } from '../../redux/actions/author'
+import author from '../../redux/reducers/author'
+import { any } from 'bluebird'
 
 export default function UpdateAuthor() {
   const [open, setOpen] = useState(false)
@@ -19,8 +21,8 @@ export default function UpdateAuthor() {
   const [newDateOfBirth, setNewDateOfBirth] = useState('')
   const [newBook, setNewBook] = useState('')
 
-  const authors = useSelector((state: AppState) => state.author.items)
   const dispatch = useDispatch()
+  const author = useSelector((state: AppState) => state.author.items)
 
   const handleFirstNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewFirstName(e.target.value)
@@ -42,23 +44,23 @@ export default function UpdateAuthor() {
   const handleClose = () => {
     setOpen(false)
   }
-  // add new author or update the author.
-  const addAuthor = async (e: React.FormEvent) => {
+  //update the author.
+  const editAuthor = async (e: React.FormEvent) => {
     e.preventDefault()
-    const newAuthor = {
+    const item = author.find(({ data }: any) => data._id)
+    const updatedAuthor = {
+      ...item,
+      _id: item?._id,
       firstName: newFirstName,
       lastName: newLastName,
       dateOfBirth: newDateOfBirth,
       book: newBook,
     }
-
-    if (typeof authors !== 'undefined') {
-      dispatch(addAuthorThunk(newAuthor))
-      setNewFirstName('')
-      setNewLastName('')
-      setNewBook('')
-      setNewDateOfBirth('')
-    }
+    dispatch(editAuthorThunk(updatedAuthor))
+    setNewFirstName('')
+    setNewLastName('')
+    setNewBook('')
+    setNewDateOfBirth('')
   }
   return (
     <div>
@@ -70,13 +72,10 @@ export default function UpdateAuthor() {
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
       >
-        <DialogTitle id="form-dialog-title">Add new book</DialogTitle>
+        <DialogTitle id="form-dialog-title">Edit Author</DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            Add new Author to the library if it exists based on title, its
-            details will be updated
-          </DialogContentText>
-          <form onSubmit={addAuthor}>
+          <DialogContentText>Edit the Author details</DialogContentText>
+          <form onSubmit={editAuthor}>
             <TextField
               id="outlined-full-width"
               label="First Name"
@@ -139,7 +138,7 @@ export default function UpdateAuthor() {
                 color="primary"
                 variant="contained"
               >
-                Add/Update Author
+                Update Author
               </Button>
             </DialogActions>
           </form>

@@ -7,6 +7,7 @@ import {
   Book,
   CREATE_BOOK,
   REMOVE_BOOK,
+  SEARCH_BOOK,
   AddBook,
 } from '../../types'
 
@@ -33,6 +34,15 @@ export const removeBook = (book: Book): BookActions => {
     type: REMOVE_BOOK,
     payload: {
       book,
+    },
+  }
+}
+
+export const searchBook = (searchTerm: string): BookActions => {
+  return {
+    type: SEARCH_BOOK,
+    payload: {
+      searchTerm,
     },
   }
 }

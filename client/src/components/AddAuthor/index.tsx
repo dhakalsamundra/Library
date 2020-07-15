@@ -62,7 +62,7 @@ export default function AddAuthor() {
   return (
     <div>
       <Button variant="contained" color="secondary" onClick={handleClickOpen}>
-        ADD/UPDATE AUTHOR
+        ADD AUTHOR
       </Button>
       <Dialog
         open={open}
@@ -71,10 +71,7 @@ export default function AddAuthor() {
       >
         <DialogTitle id="form-dialog-title">Add new book</DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            Add new Author to the library if it exists based on title, its
-            details will be updated
-          </DialogContentText>
+          <DialogContentText>Add new Author to the library</DialogContentText>
           <form onSubmit={addAuthor}>
             <TextField
               id="outlined-full-width"
@@ -138,7 +135,7 @@ export default function AddAuthor() {
                 color="primary"
                 variant="contained"
               >
-                Add/Update Author
+                Add Author
               </Button>
             </DialogActions>
           </form>
