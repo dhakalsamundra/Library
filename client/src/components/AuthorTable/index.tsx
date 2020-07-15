@@ -13,13 +13,13 @@ import {
 } from '@material-ui/core'
 import Button from '@material-ui/core/Button'
 import DeleteIcon from '@material-ui/icons/Delete'
-import EditIcon from '@material-ui/icons/Edit'
 
 import {
   deleteAuthorThunk,
   fetchAuthorsThunk,
   editAuthorThunk,
 } from '../../redux/actions'
+import UpdateAuthor from '../UpdateAuthor'
 import { AppState } from '../../types'
 
 export default function AuthorTable() {
@@ -52,7 +52,6 @@ export default function AuthorTable() {
         dateOfBirth: newDateOfBirth,
         book: newBook,
       }
-      console.log('dfdsagfsagfsar', item._id)
       dispatch(editAuthorThunk(updatedAuthor))
     }
   }
@@ -99,13 +98,7 @@ export default function AuthorTable() {
                     </IconButton>
                   </TableCell>
                   <TableCell>
-                    <IconButton
-                      color="secondary"
-                      aria-label="edit author"
-                      onClick={() => handleEdit(author._id)}
-                    >
-                      <EditIcon />
-                    </IconButton>
+                    <UpdateAuthor />
                   </TableCell>
                 </TableRow>
               </TableBody>
