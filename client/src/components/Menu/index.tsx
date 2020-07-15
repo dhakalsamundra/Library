@@ -17,6 +17,8 @@ import Typography from '@material-ui/core/Typography'
 import Divider from '@material-ui/core/Divider'
 import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
+import SearchIcon from '@material-ui/icons/Search'
+import InputBase from '@material-ui/core/InputBase'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import { GoogleLogout } from 'react-google-login'
 
@@ -25,67 +27,8 @@ import AddAuthor from '../AddAuthor'
 import BookTable from '../BookTable'
 import AuthorTable from '../AuthorTable'
 import { userSignOut } from '../../redux/actions/user'
-
-const drawerWidth = 200
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      display: 'flex',
-    },
-    appBar: {
-      transition: theme.transitions.create(['margin', 'width'], {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-      }),
-    },
-    appBarShift: {
-      width: `calc(100% - ${drawerWidth}px)`,
-      marginLeft: drawerWidth,
-      transition: theme.transitions.create(['margin', 'width'], {
-        easing: theme.transitions.easing.easeOut,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-    },
-    menuButton: {
-      marginRight: theme.spacing(2),
-    },
-    hide: {
-      display: 'none',
-    },
-    drawer: {
-      width: drawerWidth,
-      flexShrink: 0,
-    },
-    drawerPaper: {
-      width: drawerWidth,
-    },
-    drawerHeader: {
-      display: 'flex',
-      alignItems: 'center',
-      padding: theme.spacing(0, 1),
-      // necessary for content to be below app bar
-      ...theme.mixins.toolbar,
-      justifyContent: 'flex-end',
-    },
-    content: {
-      flexGrow: 1,
-      padding: theme.spacing(3),
-      transition: theme.transitions.create('margin', {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-      }),
-      marginLeft: -drawerWidth,
-    },
-    contentShift: {
-      transition: theme.transitions.create('margin', {
-        easing: theme.transitions.easing.easeOut,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-      marginLeft: 0,
-    },
-  })
-)
+import { searchBook } from '../../redux/actions/book'
+import useStyles from './style'
 
 export default function PersistentDrawerLeft() {
   const classes = useStyles()
@@ -112,6 +55,12 @@ export default function PersistentDrawerLeft() {
     }
   }
 
+  const handleNewSearchChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ): void => {
+    dispatch(searchBook)
+  }
+
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -133,6 +82,18 @@ export default function PersistentDrawerLeft() {
           </IconButton>
           <Typography variant="h6" noWrap>
             Library
+          </Typography>
+          <Typography>
+            <InputBase
+              autoComplete="off"
+              placeholder="Search…"
+              onChange={handleNewSearchChange}
+              classes={{
+                root: classes.inputRoot,
+                input: classes.inputInput,
+              }}
+              inputProps={{ 'aria-label': 'search' }}
+            />
           </Typography>
           <Typography style={{ marginLeft: 'auto' }}>
             <GoogleLogout
