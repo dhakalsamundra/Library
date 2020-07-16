@@ -46,18 +46,11 @@ const deleteAuthor = async (author: Author, dispatch: Dispatch) => {
 }
 
 const updateAuthor = async (author: Author, dispatch: Dispatch) => {
-  // const updatedAuthor = {
-  //   _id: item?._id,
-  //   firstName: newFirstName,
-  //   lastName: newLastName,
-  //   dateOfBirth: newDateOfBirth,
-  //   book: newBook,
-  // }
   try {
     const response = await axios({
       method: 'PUT',
       url: `${baseUrl}/${author._id}`,
-      data: authorUpdate,
+      data: author,
     })
     dispatch(authorUpdate(author))
   } catch (error) {
