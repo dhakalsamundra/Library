@@ -38,7 +38,9 @@ export default function author(
       const { author } = action.payload
       return {
         ...state,
-        items: [...state.items, author],
+        items: state.items.map((oldAuthor) =>
+          oldAuthor._id === author._id ? author : oldAuthor
+        ),
       }
     }
 
