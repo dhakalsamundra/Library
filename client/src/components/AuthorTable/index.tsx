@@ -19,8 +19,8 @@ import {
   fetchAuthorsThunk,
   editAuthorThunk,
 } from '../../redux/actions'
-import UpdateAuthor from '../UpdateAuthor'
 import { AppState } from '../../types'
+import AuthorUpdate from '../UpdateAuthor'
 
 export default function AuthorTable() {
   const [open, setOpen] = useState(false)
@@ -80,7 +80,7 @@ export default function AuthorTable() {
                     </IconButton>
                   </TableCell>
                   <TableCell>
-                    <UpdateAuthor />
+                    <AuthorUpdate author={author} />
                   </TableCell>
                 </TableRow>
               </TableBody>
