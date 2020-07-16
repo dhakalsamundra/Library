@@ -2,6 +2,7 @@
 export const GET_ALL_BOOKS = 'GET_ALL_BOOKS'
 export const CREATE_BOOK = 'CREATE_BOOK'
 export const REMOVE_BOOK = 'REMOVE_BOOK'
+export const UPDATE_BOOK = 'UPDATE_BOOK'
 export const SEARCH_BOOK = 'SEARCH_BOOK'
 
 // ACTION TYPE AUTHOR
@@ -55,6 +56,12 @@ export type removeBookAction = {
     book: Book
   }
 }
+export type updateBookAction = {
+  type: typeof UPDATE_BOOK
+  payload: {
+    book: Book
+  }
+}
 
 export type searchBookAction = {
   type: typeof SEARCH_BOOK
@@ -67,6 +74,7 @@ export type BookActions =
   | getAllBooksAction
   | createBookAction
   | removeBookAction
+  | updateBookAction
   | searchBookAction
 
 export type BookState = {
