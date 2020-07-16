@@ -9,18 +9,17 @@ import DialogTitle from '@material-ui/core/DialogTitle'
 import EditIcon from '@material-ui/icons/Edit'
 
 import { useSelector, useDispatch } from 'react-redux'
-import { AppState } from '../../types'
+import { AppState, Author } from '../../types'
 import { editAuthorThunk } from '../../redux/actions/author'
 
-export default function AddAuthor() {
+export default function AddAuthor({ author }: any) {
   const [open, setOpen] = useState(false)
-  const [newFirstName, setNewFirstName] = useState('')
-  const [newLastName, setNewLastName] = useState('')
-  const [newDateOfBirth, setNewDateOfBirth] = useState('')
-  const [newBook, setNewBook] = useState('')
+  const [newFirstName, setNewFirstName] = useState(`${author.firstName}`)
+  const [newLastName, setNewLastName] = useState(`${author.lastName}`)
+  const [newDateOfBirth, setNewDateOfBirth] = useState(`${author.dateOfBirth}`)
+  const [newBook, setNewBook] = useState(`${author.book}`)
 
   const authors = useSelector((state: AppState) => state.author.items)
-  console.log('this is the authors list from store', authors)
   const dispatch = useDispatch()
 
   const handleFirstNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,9 +28,9 @@ export default function AddAuthor() {
   const handleLastNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewLastName(e.target.value)
   }
-  const handleDateOfBirthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNewDateOfBirth(e.target.value)
-  }
+  // const handleDateOfBirthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setNewDateOfBirth(e.target.value)
+  // }
   const handleBookChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewBook(e.target.value)
   }
@@ -43,16 +42,20 @@ export default function AddAuthor() {
   const handleClose = () => {
     setOpen(false)
   }
-  // add new author or update the author.
+  //  update the author.
   const editAuthor = async (e: React.FormEvent) => {
     e.preventDefault()
-    const updatedAuthor = {
-      firstName: newFirstName,
-      lastName: newLastName,
-      dateOfBirth: newDateOfBirth,
-      book: newBook,
+
+    if (author) {
+      const updatedAuthor: Author = {
+        _id: author._id,
+        firstName: newFirstName,
+        lastName: newLastName,
+        dateOfBirth: newDateOfBirth,
+        book: newBook,
+      }
+      dispatch(editAuthorThunk(updatedAuthor))
     }
-    dispatch(editAuthorThunk(updatedAuthor))
   }
   return (
     <div>
@@ -99,7 +102,6 @@ export default function AddAuthor() {
               label="Date Of Birth"
               style={{ margin: 8 }}
               value={newDateOfBirth}
-              onChange={handleDateOfBirthChange}
               fullWidth
               margin="normal"
               InputLabelProps={{
