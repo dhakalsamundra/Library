@@ -1,7 +1,12 @@
 import axios from 'axios'
 import { Dispatch } from 'redux'
 
-import { getAllBooks, createBook, removeBook } from '../redux/actions/book'
+import {
+  getAllBooks,
+  createBook,
+  removeBook,
+  bookUpdate,
+} from '../redux/actions/book'
 import { Book, AddBook } from '../types'
 
 const baseUrl = 'http://localhost:3001/api/v1/books'
@@ -37,4 +42,17 @@ const deleteBook = async (book: Book, dispatch: Dispatch) => {
   }
 }
 
-export default { getAll, create, deleteBook }
+const updateBook = async (book: Book, dispatch: Dispatch) => {
+  try {
+    const response = await axios({
+      method: 'PUT',
+      url: `${baseUrl}/${book._id}`,
+      data: book,
+    })
+    dispatch(bookUpdate(book))
+  } catch (error) {
+    console.log('this is error ', error)
+  }
+}
+
+export default { getAll, create, deleteBook, updateBook }
