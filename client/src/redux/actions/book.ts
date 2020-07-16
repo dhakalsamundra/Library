@@ -9,6 +9,7 @@ import {
   REMOVE_BOOK,
   SEARCH_BOOK,
   AddBook,
+  UPDATE_BOOK,
 } from '../../types'
 
 export const getAllBooks = (books: Book[]): BookActions => {
@@ -32,6 +33,15 @@ export const createBook = (book: Book): BookActions => {
 export const removeBook = (book: Book): BookActions => {
   return {
     type: REMOVE_BOOK,
+    payload: {
+      book,
+    },
+  }
+}
+
+export const bookUpdate = (book: Book): BookActions => {
+  return {
+    type: UPDATE_BOOK,
     payload: {
       book,
     },
@@ -63,5 +73,11 @@ export function addBookThunk(book: AddBook) {
 export function deleteBookThunk(book: Book) {
   return async (dispatch: Dispatch) => {
     return BookServices.deleteBook(book, dispatch)
+  }
+}
+
+export function editBookThunk(book: Book) {
+  return async (dispatch: Dispatch) => {
+    return BookServices.updateBook(book, dispatch)
   }
 }

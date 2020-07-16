@@ -5,6 +5,7 @@ import {
   CREATE_BOOK,
   REMOVE_BOOK,
   SEARCH_BOOK,
+  UPDATE_BOOK,
 } from '../../types'
 
 export default function book(
@@ -28,17 +29,20 @@ export default function book(
       const newItems = state.items.filter((item) => item._id !== book._id)
       return { ...state, items: newItems }
     }
-    case SEARCH_BOOK: {
-      const { searchTerm } = action.payload
-      // const searchedBook = state.items.filter((element: { title: string }) =>
-      //   element.title.toLowerCase().includes(searchTerm.toLowerCase())
-      // )
+    case UPDATE_BOOK: {
+      const { book } = action.payload
       return {
         ...state,
-        filteredBook: state.items.filter((item) =>
-          item.title.toLowerCase().includes(searchTerm.toLowerCase())
+        items: state.items.map((oldBook) =>
+          oldBook._id === book._id ? book : oldBook
         ),
       }
+    }
+    case SEARCH_BOOK: {
+      const { searchTerm } = action.payload
+      const searchedBook = state.items.filter((element: { title: string }) =>
+        element.title.toLowerCase().includes(searchTerm.toLowerCase())
+      )
     }
     default:
       return state
