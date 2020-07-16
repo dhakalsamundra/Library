@@ -14,11 +14,7 @@ import {
 import Button from '@material-ui/core/Button'
 import DeleteIcon from '@material-ui/icons/Delete'
 
-import {
-  deleteAuthorThunk,
-  fetchAuthorsThunk,
-  editAuthorThunk,
-} from '../../redux/actions'
+import { deleteAuthorThunk, fetchAuthorsThunk } from '../../redux/actions'
 import { AppState } from '../../types'
 import AuthorUpdate from '../UpdateAuthor'
 
@@ -80,7 +76,7 @@ export default function AuthorTable() {
                     </IconButton>
                   </TableCell>
                   <TableCell>
-                    <AuthorUpdate author={author} />
+                    <AuthorUpdate key={author._id} author={author} />
                   </TableCell>
                 </TableRow>
               </TableBody>

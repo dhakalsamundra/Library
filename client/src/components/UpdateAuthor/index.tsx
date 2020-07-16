@@ -8,18 +8,17 @@ import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import EditIcon from '@material-ui/icons/Edit'
 
-import { useSelector, useDispatch } from 'react-redux'
-import { AppState, Author } from '../../types'
+import { useDispatch } from 'react-redux'
+import { Author } from '../../types'
 import { editAuthorThunk } from '../../redux/actions/author'
 
 export default function AddAuthor({ author }: any) {
   const [open, setOpen] = useState(false)
   const [newFirstName, setNewFirstName] = useState(`${author.firstName}`)
   const [newLastName, setNewLastName] = useState(`${author.lastName}`)
-  const [newDateOfBirth, setNewDateOfBirth] = useState(`${author.dateOfBirth}`)
+  const [newDateOfBirth] = useState(`${author.dateOfBirth}`)
   const [newBook, setNewBook] = useState(`${author.book}`)
 
-  const authors = useSelector((state: AppState) => state.author.items)
   const dispatch = useDispatch()
 
   const handleFirstNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,9 +27,7 @@ export default function AddAuthor({ author }: any) {
   const handleLastNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewLastName(e.target.value)
   }
-  // const handleDateOfBirthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   setNewDateOfBirth(e.target.value)
-  // }
+
   const handleBookChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewBook(e.target.value)
   }
