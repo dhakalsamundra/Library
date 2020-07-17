@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import {
   TableHead,
@@ -9,13 +9,16 @@ import {
   IconButton,
 } from '@material-ui/core'
 import DeleteIcon from '@material-ui/icons/Delete'
-import { deleteBookThunk } from '../../redux/actions'
+import { deleteBookThunk, fetchBooksThunk } from '../../redux/actions'
 import { AppState } from '../../types'
 import UpdateBook from '../updateBook'
 
 export default function BookTable() {
-  const items = useSelector((state: AppState) => state.book.filteredBook)
+  const items = useSelector((state: AppState) => state.book.items)
   const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(fetchBooksThunk())
+  }, [dispatch])
 
   const handleDelete = (id: string) => {
     const item = items.find((book) => book._id === id)
