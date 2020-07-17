@@ -12,12 +12,16 @@ import { useDispatch } from 'react-redux'
 import { Author } from '../../types'
 import { editAuthorThunk } from '../../redux/actions/author'
 
-export default function AddAuthor({ author }: any) {
+export type UpdateAuthorProp = {
+  author: Author
+}
+
+export default function AddAuthor({ author }: UpdateAuthorProp) {
   const [open, setOpen] = useState(false)
-  const [newFirstName, setNewFirstName] = useState(`${author.firstName}`)
-  const [newLastName, setNewLastName] = useState(`${author.lastName}`)
-  const [newDateOfBirth] = useState(`${author.dateOfBirth}`)
-  const [newBook, setNewBook] = useState(`${author.book}`)
+  const [newFirstName, setNewFirstName] = useState(author.firstName)
+  const [newLastName, setNewLastName] = useState(author.lastName)
+  const [newDateOfBirth] = useState(author.dateOfBirth)
+  const [newBook, setNewBook] = useState(author.book)
 
   const dispatch = useDispatch()
 
