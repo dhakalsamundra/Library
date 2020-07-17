@@ -6,7 +6,7 @@ import {
   deleteBook,
   findById,
   findAll,
-  // getFilteredByQueryInput,
+  getFilteredByQueryInput,
   borrowBook,
   returnBook,
 } from '../controllers/book'
@@ -15,7 +15,7 @@ import {
 const router = express.Router()
 
 router.get('/', findAll)
-// router.get('/search/:filterValue', getFilteredByQueryInput)
+router.get('/search', getFilteredByQueryInput)
 router.get('/:bookId', findById)
 router.put('/:bookId', updateBook)
 router.put('/:bookId/borrow', borrowBook)

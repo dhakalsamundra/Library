@@ -77,6 +77,7 @@ export function deleteBookThunk(book: Book) {
 }
 
 export function editBookThunk(book: Book) {
+  console.log('Updated book in action', book)
   return async (dispatch: Dispatch) => {
     return BookServices.updateBook(book, dispatch)
   }

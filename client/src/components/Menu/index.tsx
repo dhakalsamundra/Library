@@ -31,7 +31,7 @@ export default function PersistentDrawerLeft() {
   const theme = useTheme()
   const [open, setOpen] = React.useState(false)
 
-  const searchedBook = useSelector((state: AppState) => state.book.filteredBook)
+  const searchedBook = useSelector((state: AppState) => state.book.items)
 
   const handleDrawerOpen = () => {
     setOpen(true)

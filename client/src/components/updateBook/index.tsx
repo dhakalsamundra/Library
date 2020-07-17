@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
@@ -10,7 +10,7 @@ import DialogTitle from '@material-ui/core/DialogTitle'
 import EditIcon from '@material-ui/icons/Edit'
 
 import { Book } from '../../types'
-import { editBookThunk, fetchBooksThunk } from '../../redux/actions/book'
+import { editBookThunk } from '../../redux/actions/book'
 
 export default function UpdateBook({ book }: any) {
   const [open, setOpen] = useState(false)
@@ -25,9 +25,6 @@ export default function UpdateBook({ book }: any) {
   const [newAuthor, setNewAuthor] = useState(`${book.author}`)
 
   const dispatch = useDispatch()
-  useEffect(() => {
-    dispatch(editBookThunk(book))
-  }, [dispatch])
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewTitle(e.target.value)
@@ -72,6 +69,7 @@ export default function UpdateBook({ book }: any) {
         publisher: newPublisher,
         genres: newGenres,
       }
+      console.log('this is the updated book', updateBook)
       dispatch(editBookThunk(updateBook))
     }
   }

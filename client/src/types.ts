@@ -80,7 +80,6 @@ export type BookActions =
 export type BookState = {
   // should passed the author which have _id property too so that it is used while deleting the author
   items: Book[]
-  filteredBook: Book[]
 }
 
 // section of declaring the part of author
