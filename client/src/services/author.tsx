@@ -52,7 +52,7 @@ const updateAuthor = async (author: Author, dispatch: Dispatch) => {
       url: `${baseUrl}/${author._id}`,
       data: author,
     })
-    dispatch(authorUpdate(author))
+    dispatch(authorUpdate(response.data))
   } catch (error) {
     console.log('this is the error', error)
   }
