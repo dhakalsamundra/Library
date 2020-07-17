@@ -9,17 +9,40 @@ function create(book: BookDocument): Promise<BookDocument> {
 async function findAll(): Promise<BookDocument[]> {
   return Book.find().sort({ title: 1, publishedDate: -1 }).exec()
 }
+type queryPayload = {
+  title?: string
+  status?: string
+  publisher?: string
+  author?: string
+  genres?: string
+}
+async function filteredByQuery(query: queryPayload): Promise<BookDocument[]> {
+  const myFilter: queryPayload = {}
+  if (query.title) {
+    myFilter.title = query.title
+  }
 
-// function filteredByQuery(key: string, value: string): Promise<BookDocument[]> {
-//   return Book.find({ [key]: value })
-//     .exec()
-//     .then((book) => {
-//       if (!book) {
-//         throw new Error('Book  not found')
-//       }
-//       return book
-//     })
-// }
+  if (query.status) {
+    myFilter.status = query.status
+  }
+  if (query.author) {
+    myFilter.author = query.author
+  }
+  if (query.genres) {
+    myFilter.genres = query.genres
+  }
+  if (query.publisher) {
+    myFilter.publisher = query.publisher
+  }
+  return Book.find(myFilter)
+    .sort({ title: 1, publishedDate: -1 })
+    .then((book) => {
+      if (book.length === 0) {
+        throw new Error('Book not found')
+      }
+      return book
+    })
+}
 
 function findById(bookId: string): Promise<BookDocument> {
   return Book.findById(bookId)
@@ -55,6 +78,15 @@ function update(
       }
       if (update.status) {
         book.status = update.status
+      }
+      if (update.publisher) {
+        book.publisher = update.publisher
+      }
+      if (update.publishedDate) {
+        book.publishedDate = update.publishedDate
+      }
+      if (update.genres) {
+        book.genres = update.genres
       }
       return book.save()
     })
@@ -109,7 +141,7 @@ export default {
   create,
   findById,
   findAll,
-  // filteredByQuery,
+  filteredByQuery,
   update,
   deleteBook,
   borrowBook,
