@@ -49,7 +49,8 @@ const updateBook = async (book: Book, dispatch: Dispatch) => {
       url: `${baseUrl}/${book._id}`,
       data: book,
     })
-    dispatch(bookUpdate(book))
+    console.log('updated book from server response', response.data)
+    dispatch(bookUpdate(response.data))
   } catch (error) {
     console.log('this is error ', error)
   }
