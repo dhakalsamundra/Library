@@ -12,17 +12,19 @@ import EditIcon from '@material-ui/icons/Edit'
 import { Book } from '../../types'
 import { editBookThunk } from '../../redux/actions/book'
 
-export default function UpdateBook({ book }: any) {
+export type UpdateBookProps = {
+  book: Book
+}
+
+export default function UpdateBook({ book }: UpdateBookProps) {
   const [open, setOpen] = useState(false)
-  const [newTitle, setNewTitle] = useState(`${book.title}`)
-  const [newISBN] = useState(`${book.ISBN}`)
-  const [newPublishedDate, setNewPublishedDate] = useState(
-    `${book.publishedDate}`
-  )
-  const [newStatus, setNewStatus] = useState(`${book.status}`)
-  const [newGenres, setNewGenres] = useState(`${book.genres}`)
-  const [newPublisher, setNewPublisher] = useState(`${book.publisher}`)
-  const [newAuthor, setNewAuthor] = useState(`${book.author}`)
+  const [newTitle, setNewTitle] = useState(book.title)
+  const [newISBN] = useState(book.ISBN)
+  const [newPublishedDate, setNewPublishedDate] = useState(book.publishedDate)
+  const [newStatus, setNewStatus] = useState(book.status)
+  const [newGenres, setNewGenres] = useState(book.genres)
+  const [newPublisher, setNewPublisher] = useState(book.publisher)
+  const [newAuthor, setNewAuthor] = useState(book.author)
 
   const dispatch = useDispatch()
 
