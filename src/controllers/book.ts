@@ -56,7 +56,7 @@ export const updateBook = async (
     const updatedBook = await BookService.update(bookId, update)
     res.json(updatedBook)
   } catch (error) {
-    next(new NotFoundError('Movie not found', error))
+    next(new NotFoundError('Book not found', error))
   }
 }
 
@@ -93,6 +93,20 @@ export const updateBook = async (
 //     next(new NotFoundError('Book not found', error))
 //   }
 // }
+
+export const getFilteredByQueryInput = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const filter = req.query
+    const response = await BookService.filteredByQuery(filter)
+    res.json(response)
+  } catch (error) {
+    next(new NotFoundError('Book not found', error))
+  }
+}
 
 export const deleteBook = async (
   req: Request,
