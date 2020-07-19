@@ -9,17 +9,8 @@ import {
 } from '../redux/actions/book'
 import { Book, AddBook } from '../types'
 
-const setAuthorization = (token: string) => {
-    const tokenId = localStorage.getItem('signIn-token')
-    if (tokenId) {
-        axios.defaults.headers.common['Authorization'] = token;
-    } else {
-        axios.defaults.headers.common['Authorization'] = null;
-        /*if setting null does not remove `Authorization` header then try     
-          delete axios.defaults.headers.common['Authorization'];
-        */
-    }
-  }
+
+
   
 const baseUrl = 'http://localhost:3001/api/v1/books'
 const token = localStorage.getItem('signIn-token')
@@ -58,11 +49,9 @@ const deleteBook = async (book: Book, dispatch: Dispatch) => {
 
 const updateBook = async (book: Book, dispatch: Dispatch) => {
   try {
-    const response = await axios({
-      method: 'PUT',
-      url: `${baseUrl}/${book._id}`,
-      data: book,
-    })
+    const url = `${baseUrl}/${book._id}`
+    const data = book
+    const response = await axios.put(url, data, { headers: { Authorization: `Bearer ${token}` } })
     console.log('updated book from server response', response.data)
     dispatch(bookUpdate(response.data))
   } catch (error) {
