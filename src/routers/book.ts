@@ -21,7 +21,7 @@ router.get('/:bookId', findById)
 router.put('/:bookId', authJwt, updateBook)
 router.put('/:bookId/borrow', borrowBook)
 router.put('/:bookId/return', returnBook)
-router.delete('/:bookId', deleteBook)
+router.delete('/:bookId', authJwt, deleteBook)
 router.post('/', createBook)
 
 export default router
