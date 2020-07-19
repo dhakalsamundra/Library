@@ -5,6 +5,7 @@ import UserService from '../../services/signIn'
 import { UserActions, User, GOOGLE_SIGNIN, SIGNOUT } from '../../types'
 
 export const userSignIn = (user: User): UserActions => {
+  console.log('this is the server response of user token samundra', user)
   return {
     type: GOOGLE_SIGNIN,
     payload: {
@@ -20,9 +21,9 @@ export const userSignOut = () => {
   }
 }
 
-export function googleSignInThunk(response: any) {
+export function googleSignInThunk(tokenId: string) {
   return async (dispatch: Dispatch) => {
-    return UserService.signIn(response, dispatch)
+    return UserService.signIn(tokenId, dispatch)
   }
 }
 
