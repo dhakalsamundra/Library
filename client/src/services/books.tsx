@@ -9,6 +9,7 @@ import {
 } from '../redux/actions/book'
 import { Book, AddBook } from '../types'
 
+// by doing this, we don't need to put all authorization headers inside each function
 (function() {
   const token = localStorage.getItem('signIn-token');
   if (token) {

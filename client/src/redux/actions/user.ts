@@ -5,7 +5,6 @@ import UserService from '../../services/signIn'
 import { UserActions, User, GOOGLE_SIGNIN, SIGNOUT } from '../../types'
 
 export const userSignIn = (user: User): UserActions => {
-  console.log('this is the server response of user token samundra', user)
   return {
     type: GOOGLE_SIGNIN,
     payload: {
@@ -27,12 +26,3 @@ export function googleSignInThunk(tokenId: string) {
   }
 }
 
-export function setAuthorizationHeader(token: string) {
-  if (token !== localStorage.getItem('signInToken')) {
-    const signInToken = `Bearer ${token}`
-    localStorage.setItem('signInToken', signInToken)
-    axios.defaults.headers.common['Authorization'] = signInToken
-  } else {
-    axios.defaults.headers.common['Authorization'] = token
-  }
-}
