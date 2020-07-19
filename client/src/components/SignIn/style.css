@@ -1,0 +1,108 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&family=Playfair+Display&family=Roboto:wght@500&display=swap');
+
+html {
+  height: 100%;
+}
+.container {
+  margin: 0;
+  padding: 30px 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Regular Sign In  */
+
+.form {
+  font-family: 'PlayFair Display', serif;
+  width: 400px;
+}
+
+.form h2 {
+  font-size: 40px;
+  font-weight: lighter;
+}
+.form .form-header {
+  text-align: center;
+}
+
+.form-input-items input {
+  width: 100%;
+  font-size: 16px;
+  color: black;
+  margin-bottom: 30px;
+  border: none;
+  border-bottom: 1px solid black;
+  outline: none;
+  background: transparent;
+}
+
+.form .form-input-container label {
+  text-align: left;
+  font-size: 16px;
+  color: black;
+  pointer-events: none;
+}
+
+.sign-up-link {
+  color: grey;
+}
+
+.forgot span {
+  display: block;
+  text-align: left;
+  color: black;
+}
+
+.form .btn {
+  display: flex;
+  margin-top: 20px;
+  padding: 10px;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  background-color: gray;
+  border: none;
+}
+
+.home span {
+  display: block;
+  text-align: center;
+  color: black;
+}
+
+.form .btn span {
+  color: white;
+  font-weight: bolder;
+  font-size: 16px;
+}
+
+.form .alternative {
+  border-bottom: 1px solid black;
+  text-align: center;
+  margin: 20px 0;
+}
+
+.form .alternative h4 {
+  overflow: hidden;
+  position: relative;
+  white-space: nowrap;
+  bottom: -12px;
+  display: inline;
+  max-width: 80%;
+  border: solid #fff;
+  border-width: 0 20px;
+  font-size: 16px;
+  background: #fff;
+}
+
+/* Google Sign In */
+
+.google-btn {
+  float: none;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
