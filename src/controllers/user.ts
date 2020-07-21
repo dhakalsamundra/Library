@@ -5,12 +5,23 @@ import jwt from 'jsonwebtoken'
 import User, { UserDocument } from '../models/User'
 import { JWT_SECRET } from '../util/secrets'
 import UserService from '../services/user'
-import {
-  NotFoundError,
-  BadRequestError,
-  InternalServerError,
-} from '../helpers/apiError'
+import { NotFoundError, BadRequestError, InternalServerError} from '../helpers/apiError'
 
+
+const isEmail = (email: string) => {
+  const regEx = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/
+  if(email.match(regEx)) {
+    return true
+  } else {
+    return false
+  }
+}
+
+const isPassword = (password: string) => {
+  const regEx = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/
+  if(password.match(regEx)) return true
+  else return false
+}
 export const findAllUser = async (
   req: Request,
   res: Response,
@@ -23,7 +34,7 @@ export const findAllUser = async (
   }
 }
 
-export const createUser = async (
+export const signUp = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -33,6 +44,14 @@ export const createUser = async (
     //Password hashing
     const salt = await bcrypt.genSalt(10)
     const hash = await bcrypt.hash(password, salt)
+
+    if(!isEmail(email)) {
+      throw new Error('Must be a valid email address')
+    }
+    if(!isPassword(password)) {
+      throw new Error('Password must have length of 8 character with one uppercase, one lowercase, one digit and one special character ')
+    }
+
     const user = new User({
       firstName,
       lastName,
@@ -40,7 +59,7 @@ export const createUser = async (
       userName,
       password: hash
     })
-    const savedUser = await UserService.create(user)
+    const savedUser = await UserService.signUp(user)
     res.json(savedUser)
   } catch (error) {
     if (error.name === 'validationError') {
