@@ -30,13 +30,15 @@ export const createUser = async (
 ) => {
   try {
     const { firstName, lastName, email, userName, password } = req.body
-   
+    //Password hashing
+    const salt = await bcrypt.genSalt(10)
+    const hash = await bcrypt.hash(password, salt)
     const user = new User({
       firstName,
       lastName,
       email,
       userName,
-      password
+      password: hash
     })
     const savedUser = await UserService.create(user)
     res.json(savedUser)
