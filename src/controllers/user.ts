@@ -30,15 +30,16 @@ export const createUser = async (
 ) => {
   try {
     const { firstName, lastName, email, userName, password } = req.body
+   
     const user = new User({
       firstName,
       lastName,
       email,
       userName,
-      password,
+      password
     })
-    await UserService.create(user)
-    res.json(user)
+    const savedUser = await UserService.create(user)
+    res.json(savedUser)
   } catch (error) {
     if (error.name === 'validationError') {
       next(new BadRequestError('Invalid Request', error))

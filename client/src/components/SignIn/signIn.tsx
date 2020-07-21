@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import './style.css'
 // import { signIn } from '../../redux/actionCreators/authenticationActionCreator'
 import GoogleSignIn from './googleSignIn'
+import SignUp from '../SignUpForm'
 import logo from '../../img/logo.png'
 import { AppState } from '../../types'
 import { Button } from '@material-ui/core'
@@ -85,6 +86,7 @@ const SignIn: FC = () => {
           <h4>or log in with</h4>
         </div>
         <GoogleSignIn />
+        
       </form>
     </div>
   )

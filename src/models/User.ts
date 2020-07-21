@@ -6,6 +6,8 @@ export type UserDocument = Document & {
   email: string;
   googleId: string;
   picture?: string;
+  password?: string;
+  userName?: string;
 }
 
 const userSchema = new mongoose.Schema({
@@ -19,6 +21,7 @@ const userSchema = new mongoose.Schema({
   },
   email: {
     type: String,
+    required: true
   },
   googleId: {
     type: String,
@@ -26,6 +29,12 @@ const userSchema = new mongoose.Schema({
   picture: {
     type: String,
   },
+  password: {
+    type: String
+  },
+  userName: {
+    type: String
+  }
 })
 
 // userSchema.set('toJSON', {

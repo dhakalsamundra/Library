@@ -1,8 +1,10 @@
 import axios from 'axios'
 import { Dispatch } from 'redux'
-import { userSignIn } from '../redux/actions'
+import { userSignIn, createUser } from '../redux/actions/'
+import { AddUser } from '../types'
 
 const baseUrl = 'http://localhost:3001/api/v1/auth/google'
+const baseURL = 'http://localhost:3001/api/v1/users'
 
 async function signIn(tokenId: string, dispatch: Dispatch) {
   try {
@@ -18,4 +20,15 @@ async function signIn(tokenId: string, dispatch: Dispatch) {
   }
 }
 
-export default { signIn }
+async function create (user: AddUser, dispatch : Dispatch) {
+  try{
+    const response = await axios({ method: 'POST', url: baseURL, data: user })
+    dispatch(createUser(response.data))
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+
+
+export default { signIn, create}

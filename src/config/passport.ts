@@ -8,13 +8,13 @@ passport.use(
     {
       clientID: GOOGLE_CLIENT_ID,
     },
-    async function (parsedToken: any, googleId: string, done: any) {
+    async function (parsedToken: any, userName: string, done: any) {
       if (
         parsedToken?.payload.email &&
         parsedToken?.payload.email_verified === true
       ) {
         const userPayload = {
-          googleId: googleId,
+          userName: parsedToken?.payload.name,
           email: parsedToken?.payload.email,
           firstName: parsedToken?.payload.given_name,
           lastName: parsedToken?.payload.family_name,
