@@ -8,12 +8,12 @@ export const authenticateUser = async (req: Request, res: Response) => {
   const {
     email,
     firstName,
-    googleId,
+    userName,
     lastName,
     picture,
   } = req.user as UserDocument
   const token = jwt.sign(
-    { email, firstName, googleId, lastName, picture },
+    { email, firstName, userName, lastName, picture },
     JWT_SECRET,
     {
       expiresIn: '1h',
