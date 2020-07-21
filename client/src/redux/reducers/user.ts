@@ -1,7 +1,8 @@
-import { GOOGLE_SIGNIN, UserActions, SIGNOUT, UserState } from '../../types'
+import { GOOGLE_SIGNIN, UserActions, SIGNOUT, UserState, REGISTER_USER } from '../../types'
 
 export default function user(
-  state: UserState = { users: [] },
+  state: UserState = { users: []
+  },
   action: UserActions
 ): UserState {
   switch (action.type) {
@@ -11,6 +12,10 @@ export default function user(
     }
     case SIGNOUT: {
       return state
+    }
+    case REGISTER_USER: {
+      const {user} = action.payload
+      return { ...state, users: [...state.users, user]}
     }
 
     default:
