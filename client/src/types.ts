@@ -11,8 +11,14 @@ export const CREATE_AUTHOR = 'CREATE_AUTHOR'
 export const REMOVE_AUTHOR = 'REMOVE_AUTHOR'
 export const UPDATE_AUTHOR = 'UPDATE_AUTHOR'
 
-// ACTION TYPE SIGNIN
+//ACTION TYPE NORMAL SIGNIN
+export const REGISTER = 'REGISTER'
+
+// ACTION TYPE GOOGLE SIGNIN
 export const GOOGLE_SIGNIN = 'GOOGLE_SIGNIN'
+export const REGISTER_USER = 'REGISTER_USER'
+export const REMOVE_USER = 'REMOVE_USER'
+export const UPDATE_USER = 'UPDATE_USER'
 export const SIGNOUT = 'SIGNOUT'
 
 // Book type
@@ -136,14 +142,44 @@ export type AuthorState = {
 // section of declaring the part of user and user's login
 
 export type User = {
-  googleId: string
-  firstName: string
-  lastName: string
-  email: string
-  picture: string
+  _id: string
+  googleId?: string
+  firstName?: string
+  lastName?: string
+  email?: string
+  picture?: string
+  password?: string
+  userName?: string
+}
+
+export type AddUser = {
+  firstName: string,
+  lastName: string,
+  email: string,
+  userName: string,
+  password: string
+  confirmPassword: string
 }
 export type SignInAction = {
   type: typeof GOOGLE_SIGNIN
+  payload: {
+    user: User
+  }
+}
+export type createUserAction = {
+  type: typeof REGISTER_USER
+  payload: {
+    user: User
+  }
+}
+export type removeUserAction = {
+  type: typeof REMOVE_USER
+  payload: {
+    user: User
+  }
+}
+export type updateUserAction = {
+  type: typeof UPDATE_USER
   payload: {
     user: User
   }
@@ -153,10 +189,10 @@ export type SignOutAction = {
   type: typeof SIGNOUT
   payload: {}
 }
-export type UserActions = SignInAction | SignOutAction
+export type UserActions = SignInAction | SignOutAction | removeUserAction | createUserAction | updateUserAction
 
 export type UserState = {
-  users: User[]
+  users: User[],
 }
 
 export type AppState = {
