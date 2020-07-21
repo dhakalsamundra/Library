@@ -70,6 +70,23 @@ export const signUp = async (
   }
 }
 
+export const signIn = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const token = await UserService.signIn(req.body)
+    res.json(token)
+  } catch (error) {
+    if (error.name === 'validationError') {
+      next(new BadRequestError('Invalid Request', error))
+    } else {
+      next(new InternalServerError('Internal Server Error', error))
+    }
+  }
+}
+
 export const updateUser = async (
   req: Request,
   res: Response,

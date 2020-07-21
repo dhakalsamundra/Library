@@ -21,14 +21,14 @@ const SignIn: FC = () => {
   }
   const [user, setUser] = useState(initialState)
 
-  const handleInputChange = (event: React.FormEvent<HTMLInputElement>) => {
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUser({
       ...user,
       [event.currentTarget.name]: event.currentTarget.value,
     })
   }
 
-  const handleSignInClick = (event: any) => {
+  const handleSignInClick = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     // dispatch(signIn(user.email, user.password, history))
     // setUser(initialState)
@@ -37,6 +37,7 @@ const SignIn: FC = () => {
   return (
     <div className="container">
       <img style={{ textAlign: 'center' }} src={logo} className="logo" />
+      <div>
       <form className="form">
         {/* <Link style={{ color: 'black' }} className="home" to="/">
           <span>Go back to home</span>
@@ -73,7 +74,11 @@ const SignIn: FC = () => {
               type="password"
             />
           </div>
+          <button className="signInButton" type="submit">
+          Sign In
+        </button>
         </div>
+        </form>
         <Link
           style={{ color: 'white' }}
           className="forgot"
@@ -81,17 +86,12 @@ const SignIn: FC = () => {
         >
           <span>Forgot Password?</span>
         </Link>
-        <Button className="Sign In" onClick={handleSignInClick} />
         <div className="alternative">
           <h4>or log in with</h4>
         </div>
         <GoogleSignIn />
-        
-      </form>
+        </div>
     </div>
   )
 }
-
-SignIn.displayName = 'SignIn Page'
-
 export default SignIn
