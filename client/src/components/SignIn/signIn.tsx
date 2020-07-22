@@ -3,12 +3,12 @@ import { Link, useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 
 import './style.css'
-// import { signIn } from '../../redux/actionCreators/authenticationActionCreator'
 import GoogleSignIn from './googleSignIn'
 import SignUp from '../SignUpForm'
 import logo from '../../img/logo.png'
 import { AppState } from '../../types'
 import { Button } from '@material-ui/core'
+import {signInThunk} from '../../redux/actions/user'
 
 const SignIn: FC = () => {
   const dispatch = useDispatch()
@@ -16,8 +16,8 @@ const SignIn: FC = () => {
 
   //regular sign in
   const initialState = {
-    password: '',
     email: '',
+    password: ''
   }
   const [user, setUser] = useState(initialState)
 
@@ -30,18 +30,16 @@ const SignIn: FC = () => {
 
   const handleSignInClick = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    // dispatch(signIn(user.email, user.password, history))
-    // setUser(initialState)
+    dispatch(signInThunk(user))
+     setUser(initialState)
   }
 
   return (
     <div className="container">
       <img style={{ textAlign: 'center' }} src={logo} className="logo" />
       <div>
-      <form className="form">
-        {/* <Link style={{ color: 'black' }} className="home" to="/">
-          <span>Go back to home</span>
-        </Link> */}
+      <form className="form" onSubmit={handleSignInClick}>
+
         <div className="form-header">
           <h2>Log In</h2>
           <h4>
