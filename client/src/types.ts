@@ -1,3 +1,5 @@
+import SignIn from "./components/SignIn/signIn"
+
 //ACTION TYPE Book
 export const GET_ALL_BOOKS = 'GET_ALL_BOOKS'
 export const CREATE_BOOK = 'CREATE_BOOK'
@@ -20,6 +22,7 @@ export const REGISTER_USER = 'REGISTER_USER'
 export const REMOVE_USER = 'REMOVE_USER'
 export const UPDATE_USER = 'UPDATE_USER'
 export const SIGNOUT = 'SIGNOUT'
+export const SIGNIN = 'SIGNIN'
 
 // Book type
 export type Book = {
@@ -160,8 +163,18 @@ export type AddUser = {
   password: string
   confirmPassword: string
 }
+export type SignIn = {
+  email: string,
+  password: string
+}
 export type SignInAction = {
   type: typeof GOOGLE_SIGNIN
+  payload: {
+    user: User
+  }
+}
+export type SignInUserAction = {
+  type: typeof SIGNIN
   payload: {
     user: User
   }
@@ -189,7 +202,7 @@ export type SignOutAction = {
   type: typeof SIGNOUT
   payload: {}
 }
-export type UserActions = SignInAction | SignOutAction | removeUserAction | createUserAction | updateUserAction
+export type UserActions = SignInAction | SignOutAction | removeUserAction | createUserAction | updateUserAction | SignInUserAction
 
 export type UserState = {
   users: User[],
