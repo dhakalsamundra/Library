@@ -5,7 +5,8 @@ import jwt from 'jsonwebtoken'
 import User, { UserDocument } from '../models/User'
 import { JWT_SECRET } from '../util/secrets'
 import UserService from '../services/user'
-import { NotFoundError, BadRequestError, InternalServerError} from '../helpers/apiError'
+import { NotFoundError, BadRequestError, InternalServerError, UnauthorizedError} from '../helpers/apiError'
+import { nextTick } from 'process'
 
 
 const isEmail = (email: string) => {
@@ -76,17 +77,25 @@ export const signIn = async (
   next: NextFunction
 ) => {
   try {
-    const token = await UserService.signIn(req.body)
-    res.json(token)
-  } catch (error) {
-    if (error.name === 'validationError') {
-      next(new BadRequestError('Invalid Request', error))
-    } else {
-      next(new InternalServerError('Internal Server Error', error))
-    }
+  const {email, password} = req.body
+  const user = await User.findOne(email)
+  if(!user){
+    throw new BadRequestError('email is not register in the DataBase')
   }
+  const result = await bcrypt.compare(password, user.password)
+  if(result ) {
+    const token = jwt.sign({
+      email: user.email,
+      userId: user._id,
+      firstName: user.firstName,
+      lastName: user.lastName
+    }, JWT_SECRET, { expiresIn: '1h'})
+    res.json(token)
+  } 
+} catch (error) {
+  next(error)
 }
-
+}
 export const updateUser = async (
   req: Request,
   res: Response,
