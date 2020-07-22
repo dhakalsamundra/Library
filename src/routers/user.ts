@@ -1,5 +1,4 @@
 import express from 'express'
-import passport from 'passport'
 
 import {
   signUp,
@@ -8,7 +7,6 @@ import {
   findUserById,
   findAllUser,
   signIn
-  // authenticateUser,
 } from '../controllers/user'
 
 const router = express.Router()

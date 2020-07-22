@@ -1,11 +1,9 @@
-// used for authenticate and authorized the user from traditional way login
-import bcrypt from 'bcryptjs'
-
 import User, { UserDocument } from '../models/User'
 
-function create(user: UserDocument): Promise<UserDocument> {
+function signUp(user: UserDocument): Promise<UserDocument> {
   return user.save()
 }
+
 
 function findById(userId: string): Promise<UserDocument> {
   return User.findById(userId)
@@ -50,9 +48,9 @@ function deleteUser(userId: string): Promise<UserDocument | null> {
 }
 
 export default {
-  create,
+  signUp,
   findAll,
   deleteUser,
   findById,
-  update,
+  update
 }
