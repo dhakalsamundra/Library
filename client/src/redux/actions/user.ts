@@ -2,7 +2,7 @@ import axios from 'axios'
 import { Dispatch } from 'redux'
 
 import UserService from '../../services/googleSignIn'
-import { UserActions, User, GOOGLE_SIGNIN, REGISTER_USER, SIGNOUT, AddUser, /*registerUser, RegisterUserAction*/ } from '../../types'
+import { UserActions, User, GOOGLE_SIGNIN, REGISTER_USER, SIGNOUT, AddUser, SignIn, SIGNIN} from '../../types'
 
 export const userSignIn = (user: User): UserActions => {
   return {
@@ -16,6 +16,15 @@ export const userSignIn = (user: User): UserActions => {
 export const createUser = (user: User): UserActions => {
   return {
     type: REGISTER_USER,
+    payload: {
+      user
+    }
+  }
+}
+
+export const signedUser = (user: User) => {
+  return {
+    type: SIGNIN,
     payload: {
       user
     }
@@ -39,6 +48,11 @@ export function googleSignInThunk(tokenId: string) {
 export function addUserThunk(user: AddUser) {
   return async (dispatch: Dispatch) => {
     return UserService.create(user, dispatch)
+  }
+}
+export function signInThunk (user: SignIn) {
+  return async (dispatch: Dispatch) => {
+    return UserService.signInUser(user, dispatch)
   }
 }
 
