@@ -146,13 +146,13 @@ export type AuthorState = {
 
 export type User = {
   _id: string
-  googleId?: string
-  firstName?: string
-  lastName?: string
-  email?: string
+  firstName: string
+  lastName: string
+  email: string
   picture?: string
-  password?: string
-  userName?: string
+  password: string
+  userName: string
+  role: string
 }
 
 export type AddUser = {
@@ -206,6 +206,7 @@ export type UserActions = SignInAction | SignOutAction | removeUserAction | crea
 
 export type UserState = {
   users: User[],
+  isAuthorized: Boolean
 }
 
 export type AppState = {

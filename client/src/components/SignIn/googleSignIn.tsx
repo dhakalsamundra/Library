@@ -15,7 +15,6 @@ export default function GoogleSignIn() {
   const responseGoogle = async (
     response: GoogleLoginResponse | GoogleLoginResponseOffline
   ) => {
-    console.log('this is the uresname', response)
     const tokenId = (response as GoogleLoginResponse).tokenObj.id_token
     if (tokenId) {
       try {
