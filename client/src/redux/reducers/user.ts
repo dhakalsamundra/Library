@@ -1,7 +1,7 @@
 import { GOOGLE_SIGNIN, UserActions, SIGNOUT, UserState, REGISTER_USER, SIGNIN } from '../../types'
 
 export default function user(
-  state: UserState = { users: []
+  state: UserState = { users: [], isAuthorized: false
   },
   action: UserActions
 ): UserState {
