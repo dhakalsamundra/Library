@@ -31,7 +31,7 @@ async function create (user: AddUser, dispatch : Dispatch) {
 
 async function signInUser (user: SignIn, dispatch: Dispatch) {
   try {
-    const response = await axios({ method: 'POST', url: baseURL, data: user})
+    const response = await axios({ method: 'POST', url: baseURL + '/signIn', data: user})
     dispatch(signedUser(response.data))
   } catch (error) {
     console.log(error)
