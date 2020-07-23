@@ -10,17 +10,17 @@ import {
 import { Book, AddBook } from '../types'
 
 // by doing this, we don't need to put all authorization headers inside each function
-(function() {
-  const token = localStorage.getItem('signIn-token');
-  if (token) {
-      axios.defaults.headers.common['Authorization'] = token;
-  } else {
-      axios.defaults.headers.common['Authorization'] = null;
-      /*if setting null does not remove `Authorization` header then try     
-        delete axios.defaults.headers.common['Authorization'];
-      */
-  }
-})();
+// (function() {
+//   const token = localStorage.getItem('signIn-token');
+//   if (token) {
+//       axios.defaults.headers.common['Authorization'] = token;
+//   } else {
+//       axios.defaults.headers.common['Authorization'] = null;
+//       /*if setting null does not remove `Authorization` header then try     
+//         delete axios.defaults.headers.common['Authorization'];
+//       */
+//   }
+// })();
 
   
 const baseUrl = 'http://localhost:3001/api/v1/books'
