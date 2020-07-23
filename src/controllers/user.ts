@@ -42,6 +42,13 @@ export const signUp = async (
 ) => {
   try {
     const { firstName, lastName, email, userName, password } = req.body
+    let role
+    if(email === 'dhakalsamundra35@gmail.com') {
+      role = 'superadmin'
+    }
+    if(email.includes('@integrify.io')) {
+      role = 'admin'
+    }
     //Password hashing
     const salt = await bcrypt.genSalt(10)
     const hash = await bcrypt.hash(password, salt)
@@ -52,14 +59,15 @@ export const signUp = async (
     if(!isPassword(password)) {
       throw new Error('Password must have length of 8 character with one uppercase, one lowercase, one digit and one special character ')
     }
-
     const user = new User({
       firstName,
       lastName,
       email,
       userName,
+      role,
       password: hash
     })
+
     const savedUser = await UserService.signUp(user)
     res.json(savedUser)
   } catch (error) {
@@ -78,17 +86,20 @@ export const signIn = async (
 ) => {
   try {
   const {email, password} = req.body
-  const user = await User.findOne(email)
+  const user = await User.findOne({email})
   if(!user){
     throw new BadRequestError('email is not register in the DataBase')
   }
   const result = await bcrypt.compare(password, user.password)
-  if(result ) {
+  if(!result ) {
+    throw new BadRequestError('email is not registered')
+  } else {
     const token = jwt.sign({
       email: user.email,
-      userId: user._id,
+      userName: user.userName,
       firstName: user.firstName,
-      lastName: user.lastName
+      lastName: user.lastName,
+      role: user.role
     }, JWT_SECRET, { expiresIn: '1h'})
     res.json(token)
   } 
