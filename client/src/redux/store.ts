@@ -14,7 +14,8 @@ const initState: AppState = {
     items: [],
   },
   user: {
-    users: []
+    users: [],
+    isAuthorized: false
 
   },
 }
