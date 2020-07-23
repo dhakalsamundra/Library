@@ -14,7 +14,6 @@ passport.use(
         parsedToken?.payload.email_verified === true
       ) {
         const userPayload = {
-          googleId: googleId,
           email: parsedToken?.payload.email,
           firstName: parsedToken?.payload.given_name,
           lastName: parsedToken?.payload.family_name,

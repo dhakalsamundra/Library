@@ -24,7 +24,6 @@ import { Book, AddBook } from '../types'
 
   
 const baseUrl = 'http://localhost:3001/api/v1/books'
-const token = localStorage.getItem('signIn-token')
 
 
 const getAll = async (dispatch: Dispatch) => {

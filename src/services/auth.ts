@@ -29,4 +29,4 @@ async function findOrCreate(payload: Partial<UserDocument>) {
     }
   }
 }
-export default { findOrCreate, findUserByEmail }
+export default { findOrCreate, findUserByEmail, create }

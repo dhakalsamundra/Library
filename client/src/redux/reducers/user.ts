@@ -8,18 +8,18 @@ export default function user(
   switch (action.type) {
     case GOOGLE_SIGNIN: {
       const { user } = action.payload
-      return { ...state, users: [...state.users, user] }
+      return { ...state, users: [...state.users, user], isAuthorized: true }
     }
     case SIGNOUT: {
       return state
     }
     case REGISTER_USER: {
       const {user} = action.payload
-      return { ...state, users: [...state.users, user]}
+      return { ...state, users: [...state.users, user], isAuthorized: false}
     }
     case SIGNIN: {
       const {user} = action.payload
-      return {...state, users: [...state.users, user]}
+      return {...state, users: [...state.users, user], isAuthorized: true}
     }
 
     default:

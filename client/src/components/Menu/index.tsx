@@ -18,14 +18,11 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import { GoogleLogout } from 'react-google-login'
 
 import AddBook from '../AddBook'
-import AddAuthor from '../AddAuthor'
 import BookTable from '../BookTable'
-import AuthorTable from '../AuthorTable'
 import { userSignOut } from '../../redux/actions/user'
 import { searchBook } from '../../redux/actions/book'
 import useStyles from './style'
 import { AppState } from '../../types'
-import { Button } from '@material-ui/core'
 
 export default function PersistentDrawerLeft() {
   const classes = useStyles()

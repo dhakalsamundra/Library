@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 
-import { AddUser, User } from '../../types'
+import { AddUser } from '../../types'
 import {addUserThunk} from '../../redux/actions'
 import './style.scss'
 

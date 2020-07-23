@@ -1,9 +1,5 @@
 import User, { UserDocument } from '../models/User'
 
-function signUp(user: UserDocument): Promise<UserDocument> {
-  return user.save()
-}
-
 
 function findById(userId: string): Promise<UserDocument> {
   return User.findById(userId)
@@ -48,7 +44,6 @@ function deleteUser(userId: string): Promise<UserDocument | null> {
 }
 
 export default {
-  signUp,
   findAll,
   deleteUser,
   findById,

@@ -1,20 +1,16 @@
 import express from 'express'
 
 import {
-  signUp,
   updateUser,
   deleteUser,
   findUserById,
   findAllUser,
-  signIn
 } from '../controllers/user'
 
 const router = express.Router()
 
 router.get('/', findAllUser)
 router.get('/:userId', findUserById)
-router.post('/', signUp)
-router.post('/signIn', signIn)
 router.put('/:userId', updateUser)
 router.delete('/:userId', deleteUser)
 

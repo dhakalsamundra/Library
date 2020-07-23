@@ -1,18 +1,18 @@
-import React, { useState, FC } from 'react'
+import React, { useState, FC, useEffect } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 
 import './style.css'
 import GoogleSignIn from './googleSignIn'
-import SignUp from '../SignUpForm'
 import logo from '../../img/logo.png'
 import { AppState } from '../../types'
-import { Button } from '@material-ui/core'
 import {signInThunk} from '../../redux/actions/user'
 
 const SignIn: FC = () => {
   const dispatch = useDispatch()
   const history = useHistory()
+
+  const isAuthorized = useSelector((state: AppState) => state.user.isAuthorized)
 
   //regular sign in
   const initialState = {
@@ -28,6 +28,13 @@ const SignIn: FC = () => {
     })
   }
 
+  useEffect(() => {
+    if(isAuthorized) {
+      history.push('/home')
+    }
+    console.log('this is the error')
+  },[isAuthorized, history])
+
   const handleSignInClick = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     dispatch(signInThunk(user))
@@ -36,7 +43,7 @@ const SignIn: FC = () => {
 
   return (
     <div className="container">
-      <img style={{ textAlign: 'center' }} src={logo} className="logo" />
+      <img style={{ textAlign: 'center' }} src={logo} className="logo" alt="logIn pic"/>
       <div>
       <form className="form" onSubmit={handleSignInClick}>
 

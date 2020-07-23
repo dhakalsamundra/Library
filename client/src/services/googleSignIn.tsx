@@ -3,12 +3,12 @@ import { Dispatch } from 'redux'
 import { userSignIn, createUser, signedUser } from '../redux/actions/'
 import { AddUser, SignIn } from '../types'
 
-const baseUrl = 'http://localhost:3001/api/v1/auth/google'
-const baseURL = 'http://localhost:3001/api/v1/users'
+const baseUrl = 'http://localhost:3001/api/v1/auth'
 
 async function signIn(tokenId: string, dispatch: Dispatch) {
   try {
-    const response = await axios.post(baseUrl, {
+    const url = baseUrl + '/google'
+    const response = await axios.post(url, {
       id_token: tokenId,
     })
     // console.log('this is the final idtoken', response)
@@ -22,7 +22,7 @@ async function signIn(tokenId: string, dispatch: Dispatch) {
 
 async function create (user: AddUser, dispatch : Dispatch) {
   try{
-    const response = await axios({ method: 'POST', url: baseURL, data: user })
+    const response = await axios({ method: 'POST', url: baseUrl, data: user })
     dispatch(createUser(response.data))
   } catch (error) {
     console.log(error)
@@ -31,7 +31,7 @@ async function create (user: AddUser, dispatch : Dispatch) {
 
 async function signInUser (user: SignIn, dispatch: Dispatch) {
   try {
-    const response = await axios({ method: 'POST', url: baseURL + '/signIn', data: user})
+    const response = await axios({ method: 'POST', url: baseUrl + '/signIn', data: user})
     dispatch(signedUser(response.data))
   } catch (error) {
     console.log(error)
