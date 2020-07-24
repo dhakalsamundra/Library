@@ -11,7 +11,7 @@ export default function user(
       return { ...state, users: [...state.users, user], isAuthorized: true }
     }
     case SIGNOUT: {
-      return state
+      return { ...state, isAuthorized: false}
     }
     case REGISTER_USER: {
       const {user} = action.payload

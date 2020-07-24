@@ -43,7 +43,7 @@ const SignIn: FC = () => {
 
   return (
     <div className="container">
-      <img style={{ textAlign: 'center' }} src={logo} className="logo" alt="logIn pic"/>
+      <img style={{ textAlign: 'center' }} src={logo} className="logo" alt="logIn-logo"/>
       <div>
       <form className="form" onSubmit={handleSignInClick}>
 
