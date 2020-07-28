@@ -1,4 +1,5 @@
 import mongoose, { Document } from 'mongoose'
+import crypto from 'crypto'
 
 export type UserDocument = Document & {
   firstName: string;
@@ -8,36 +9,47 @@ export type UserDocument = Document & {
   picture?: string;
   password: string;
   role: string;
+  resetPasswordExpires?: number;
+  resetPasswordToken?: string;
+  generatePasswordReset: Function;
 }
 
 const userSchema = new mongoose.Schema({
   firstName: {
     type: String,
-    required: true
+    required: true,
   },
   lastName: {
     type: String,
-    required: true
+    required: true,
   },
   email: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
   },
   picture: {
     type: String,
   },
   password: {
-    type: String
+    type: String,
   },
   userName: {
-    type: String
+    type: String,
   },
   role: {
     type: String,
     enum: ['superadmin', 'admin', 'user'],
-    default: 'user'
-  }
+    default: 'user',
+  },
+  resetPasswordToken: {
+    type: String,
+    required: false,
+  },
+  resetPasswordExpires: {
+    type: Number,
+    required: false,
+  },
 })
 
 // userSchema.set('toJSON', {
@@ -49,5 +61,10 @@ const userSchema = new mongoose.Schema({
 //     delete returnedObject.password
 //   },
 // })
+
+userSchema.methods.generatePasswordReset = function () {
+  this.resetPasswordToken = crypto.randomBytes(20).toString('hex')
+  this.resetPasswordExpires = Date.now() + 3600000 //expires in an hour
+}
 
 export default mongoose.model<UserDocument>('User', userSchema)
