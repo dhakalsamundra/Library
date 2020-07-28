@@ -18,7 +18,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import { GoogleLogout } from 'react-google-login'
 
 import AddBook from '../AddBook'
-import BookTable from '../BookTable'
+import BookTable from '../AdminBookTable'
 import { userSignOut } from '../../redux/actions/user'
 import { searchBook } from '../../redux/actions/book'
 import useStyles from './style'
