@@ -10,6 +10,8 @@ import {
   SEARCH_BOOK,
   AddBook,
   UPDATE_BOOK,
+  BORROW_BOOK,
+  UNBORROW_BOOK
 } from '../../types'
 
 export const getAllBooks = (books: Book[]): BookActions => {
@@ -57,6 +59,24 @@ export const searchBook = (searchTerm: string): BookActions => {
   }
 }
 
+export const borrowBook = (book: Book): BookActions => {
+  return {
+    type: BORROW_BOOK,
+    payload: {
+      book
+    }
+  }
+}
+
+export const unBorrowBook = (book: Book): BookActions => {
+  return {
+    type: UNBORROW_BOOK,
+    payload: {
+      book
+    }
+  }
+}
+
 // fetchBooksThunk will be import in the home page and using useeffect data will be render there.
 export function fetchBooksThunk() {
   return async (dispatch: Dispatch) => {
@@ -80,5 +100,17 @@ export function editBookThunk(book: Book) {
   console.log('Updated book in action', book)
   return async (dispatch: Dispatch) => {
     return BookServices.updateBook(book, dispatch)
+  }
+}
+
+export function borrowBookThunk(book: Book) {
+  return async (dispatch: Dispatch) => {
+    return BookServices.borrow(book, dispatch)
+  }
+}
+
+export function unBorrowBookThunk(book: Book) {
+  return (dispatch: Dispatch) => {
+    return BookServices.unBorrow(book, dispatch)
   }
 }
