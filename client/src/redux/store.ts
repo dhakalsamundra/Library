@@ -9,13 +9,15 @@ import rootSaga from './sagas'
 const initState: AppState = {
   book: {
     items: [],
+    inCart: []
   },
   author: {
     items: [],
   },
   user: {
     users: [],
-    isAuthorized: false
+    isAuthorized: false,
+    inCart: []
 
   },
 }
