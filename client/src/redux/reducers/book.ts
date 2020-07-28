@@ -6,11 +6,14 @@ import {
   REMOVE_BOOK,
   SEARCH_BOOK,
   UPDATE_BOOK,
+  BORROW_BOOK,
+  UNBORROW_BOOK
 } from '../../types'
 
 export default function book(
   state: BookState = {
     items: [],
+    inCart: []
   },
   action: BookActions
 ): BookState {
@@ -23,6 +26,7 @@ export default function book(
       const { book } = action.payload
       return { ...state, items: [...state.items, book] }
     }
+
     case REMOVE_BOOK: {
       const { book } = action.payload
       const newItems = state.items.filter((item) => item._id !== book._id)
@@ -35,6 +39,12 @@ export default function book(
         items: state.items.map((oldBook) =>
           oldBook._id === book._id ? book : oldBook
         ),
+      }
+    }
+    case BORROW_BOOK: {
+      const {book} = action.payload
+      return {
+        ...state, /*items: state.items.map(element => element._id === book._id ? {status: book.status} : element.status)*/
       }
     }
     // case SEARCH_BOOK: {
