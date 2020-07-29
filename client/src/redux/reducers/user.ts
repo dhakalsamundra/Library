@@ -1,11 +1,13 @@
-import { GOOGLE_SIGNIN, UserActions, SIGNOUT, UserState, REGISTER_USER, SIGNIN } from '../../types'
+import { GOOGLE_SIGNIN, UserActions, SIGNOUT, UserState, REGISTER_USER, SIGNIN, FORGET_PASSWORD } from '../../types'
 
 export default function user(
   state: UserState = { users: [], isAuthorized: false, inCart: []
   },
   action: UserActions
 ): UserState {
+
   switch (action.type) {
+
     case GOOGLE_SIGNIN: {
       const { user } = action.payload
       return { ...state, users: [...state.users, user], isAuthorized: true }
@@ -20,6 +22,10 @@ export default function user(
     case SIGNIN: {
       const {user} = action.payload
       return {...state, users: [...state.users, user], isAuthorized: true}
+    }
+    case FORGET_PASSWORD: {
+      const {email} = action.payload
+      return  {...state}
     }
 
     default:
