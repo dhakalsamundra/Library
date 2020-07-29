@@ -2,9 +2,13 @@
 //ACTION TYPE Book
 export const GET_ALL_BOOKS = 'GET_ALL_BOOKS'
 export const CREATE_BOOK = 'CREATE_BOOK'
+export const ADD_BOOK_IN_CART = 'ADD_BOOK'
+export const REMOVE_BOOK_IN_CART = 'REMOVE_BOOK_IN_CART'
 export const REMOVE_BOOK = 'REMOVE_BOOK'
 export const UPDATE_BOOK = 'UPDATE_BOOK'
 export const SEARCH_BOOK = 'SEARCH_BOOK'
+export const BORROW_BOOK = 'BORROW_BOOK'
+export const UNBORROW_BOOK = 'UNBORROW_BOOK'
 
 // ACTION TYPE AUTHOR
 export const GET_ALL_AUTHORS = 'GET_ALL_AUTHORS'
@@ -15,17 +19,20 @@ export const UPDATE_AUTHOR = 'UPDATE_AUTHOR'
 //ACTION TYPE NORMAL SIGNIN
 export const REGISTER = 'REGISTER'
 
-// ACTION TYPE GOOGLE SIGNIN
+// ACTION TYPE  SIGNIN
 export const GOOGLE_SIGNIN = 'GOOGLE_SIGNIN'
 export const REGISTER_USER = 'REGISTER_USER'
 export const REMOVE_USER = 'REMOVE_USER'
 export const UPDATE_USER = 'UPDATE_USER'
 export const SIGNOUT = 'SIGNOUT'
 export const SIGNIN = 'SIGNIN'
+export const UPDATE_PASSWORD = 'UPDATE_PASSWORD'
+export const FORGET_PASSWORD = 'FORGET_PASSWORD'
+export const RESET_PASSWORD = 'RESET_PASSWORD'
 
 // Book type
 export type Book = {
-  _id: string | any
+  _id: string
   title: string
   ISBN: string
   author: string
@@ -58,6 +65,18 @@ export type createBookAction = {
     book: Book
   }
 }
+export type addBookInCartAction = {
+  type: typeof ADD_BOOK_IN_CART
+  payload: {
+    book: Book
+  }
+}
+export type removeBookInCartAction = {
+  type: typeof REMOVE_BOOK_IN_CART
+  payload: {
+    book: Book
+  }
+}
 export type removeBookAction = {
   type: typeof REMOVE_BOOK
   payload: {
@@ -78,16 +97,34 @@ export type searchBookAction = {
   }
 }
 
+export type borrowBookAction = {
+  type: typeof BORROW_BOOK
+  payload: {
+    book: Book
+  }
+}
+export type unborrowBookAction = {
+  type: typeof UNBORROW_BOOK
+  payload: {
+    book: Book
+  }
+}
+
 export type BookActions =
   | getAllBooksAction
   | createBookAction
+  | addBookInCartAction
+  | removeBookInCartAction
   | removeBookAction
   | updateBookAction
   | searchBookAction
+  | borrowBookAction
+  | unborrowBookAction
 
 export type BookState = {
   // should passed the author which have _id property too so that it is used while deleting the author
-  items: Book[]
+  items: Book[],
+  inCart: Book[]
 }
 
 // section of declaring the part of author
@@ -196,16 +233,44 @@ export type updateUserAction = {
     user: User
   }
 }
+export type updatePasswordAction = {
+  type: typeof UPDATE_PASSWORD
+  payload: {
+    password: string
+  }
+}
 // while signing Out, we do not need the payload. instead, we will remove the payload of user and then it will sign out
 export type SignOutAction = {
   type: typeof SIGNOUT
   payload: {}
 }
-export type UserActions = SignInAction | SignOutAction | removeUserAction | createUserAction | updateUserAction | SignInUserAction
+export type forgetPasswordAction = {
+  type: typeof FORGET_PASSWORD
+  payload: {
+    email: string
+  }
+}
+export type resetPasswordAction = {
+  type: typeof RESET_PASSWORD
+  payload: {
+    password: string
+  }
+}
+export type UserActions = 
+  | SignInAction 
+  | SignOutAction 
+  | removeUserAction 
+  | createUserAction 
+  | updateUserAction 
+  | SignInUserAction 
+  | updatePasswordAction 
+  | forgetPasswordAction 
+  | resetPasswordAction
 
 export type UserState = {
   users: User[],
-  isAuthorized: Boolean
+  isAuthorized: Boolean,
+  inCart: User[]
 }
 
 export type AppState = {
