@@ -6,19 +6,13 @@ import sgMail from '@sendgrid/mail'
 import { JWT_SECRET, SENDGRID_API_KEY, FROM_MAIL } from '../util/secrets'
 import User, { UserDocument } from '../models/User'
 import AuthService from '../services/auth'
+import UserService from '../services/user'
 import {
   BadRequestError,
   InternalServerError,
   NotFoundError,
 } from '../helpers/apiError'
-import validator from 'validator'
-import sendEmail from '../util/sendResetEmail'
-import { jwtToken } from '../util'
 
-type passwordRequest = {
-  email: string;
-  url: string;
-}
 const isEmail = (email: string) => {
   const regEx = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/
   if (email.match(regEx)) {
@@ -27,7 +21,6 @@ const isEmail = (email: string) => {
     return false
   }
 }
-
 const isPassword = (password: string) => {
   const regEx = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/
   if (password.match(regEx)) return true
@@ -95,6 +88,33 @@ export const signUp = async (
     } else {
       next(new InternalServerError('Internal Server Error', error))
     }
+  }
+}
+
+export const UpdatePassword = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { oldPassword, newPassword } = req.body
+    const user = await UserService.findById(req.params._id)
+    if (user) {
+      const comparePassword = await bcrypt.compareSync(
+        oldPassword,
+        user.password
+      )
+      if (!comparePassword) {
+        throw new BadRequestError('old password is incorrect')
+      } else {
+        const salt = await bcrypt.genSaltSync(10)
+        const hashed = await bcrypt.hashSync(newPassword, salt)
+        user.password = hashed
+        await user.save()
+      }
+    }
+  } catch (error) {
+    next(new NotFoundError(error))
   }
 }
 
