@@ -1,4 +1,4 @@
-import React, { useState, FC, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -7,8 +7,9 @@ import GoogleSignIn from './googleSignIn'
 import logo from '../../img/logo.png'
 import { AppState } from '../../types'
 import {signInThunk} from '../../redux/actions/user'
+import { Button } from '@material-ui/core'
 
-const SignIn: FC = () => {
+const SignIn = () => {
   const dispatch = useDispatch()
   const history = useHistory()
 
@@ -32,13 +33,15 @@ const SignIn: FC = () => {
     if(isAuthorized) {
       history.push('/home')
     }
-    console.log('this is the error')
   },[isAuthorized, history])
 
   const handleSignInClick = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     dispatch(signInThunk(user))
      setUser(initialState)
+  }
+  const handlePasswordReset = () => {
+    history.push('/forgetPassword')
   }
 
   return (
@@ -84,13 +87,7 @@ const SignIn: FC = () => {
         </button>
         </div>
         </form>
-        <Link
-          style={{ color: 'white' }}
-          className="forgot"
-          to="/forgot-password"
-        >
-          <span>Forgot Password?</span>
-        </Link>
+        <Button onClick={handlePasswordReset} color="secondary">Forget Password</Button>
         <div className="alternative">
           <h4>or log in with</h4>
         </div>
