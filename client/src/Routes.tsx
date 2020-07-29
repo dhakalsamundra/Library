@@ -6,6 +6,7 @@ import LandingPage from './pages/landing'
 import Author from './components/Author'
 import Register from './components/SignUpForm'
 import userHome from './pages/userHome'
+import resetLink from './pages/resetPassword/resetPasswordLink'
 const Routes = () => (
   <Switch>
     <Route exact path="/" component={LandingPage} />
@@ -13,6 +14,7 @@ const Routes = () => (
     <Route exact path="/author" component={Author} />
     <Route exact path="/register" component={Register} />
     <Route exact path="/dashboard" component={userHome} />
+    <Route exact path="/forgetPassword" component={resetLink} />
 
   </Switch>
 )
