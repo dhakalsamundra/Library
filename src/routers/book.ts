@@ -15,10 +15,10 @@ import authJwt from '../middlewares/auth'
 
 const router = express.Router()
 
-router.get('/', authJwt, findAll)
+router.get('/', /*authJwt*/ findAll)
 router.get('/search', getFilteredByQueryInput)
 router.get('/:bookId', findById)
-router.put('/:bookId', authJwt, updateBook)
+router.put('/:bookId', /*authJwt*/ updateBook)
 router.put('/:bookId/borrow', borrowBook)
 router.put('/:bookId/return', returnBook)
 router.delete('/:bookId', authJwt, deleteBook)
