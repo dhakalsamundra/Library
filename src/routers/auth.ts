@@ -1,7 +1,13 @@
 import express from 'express'
 import passport from 'passport'
 
-import { authenticateUser, signUp, signIn } from '../controllers/auth'
+import {
+  authenticateUser,
+  signUp,
+  signIn,
+  passwordRequestReset,
+  UpdatePassword,
+} from '../controllers/auth'
 
 const router = express.Router()
 
@@ -12,5 +18,7 @@ router.post(
 )
 router.post('/', signUp)
 router.post('/signIn', signIn)
+router.put('/updatePassword/:userId', UpdatePassword)
+router.post('/resetPasswordRequest', passwordRequestReset)
 
 export default router
