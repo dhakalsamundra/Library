@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux'
 
 import UserService from '../../services/googleSignIn'
-import { UserActions, User, GOOGLE_SIGNIN, REGISTER_USER, SIGNOUT, AddUser, SignIn, SIGNIN} from '../../types'
+import { UserActions, User, GOOGLE_SIGNIN, REGISTER_USER, SIGNOUT, AddUser, SignIn, SIGNIN, FORGET_PASSWORD} from '../../types'
 
 export const userSignIn = (user: User): UserActions => {
   return {
@@ -37,6 +37,15 @@ export const userSignOut = () => {
   }
 }
 
+export const PasswordResetLink = (email: string) => {
+  return {
+    type: FORGET_PASSWORD,
+    payload: {
+      email
+    }
+  }
+}
+
 
 export function googleSignInThunk(tokenId: string) {
   return async (dispatch: Dispatch) => {
@@ -52,6 +61,12 @@ export function addUserThunk(user: AddUser) {
 export function signInThunk (user: SignIn) {
   return async (dispatch: Dispatch) => {
     return UserService.signInUser(user, dispatch)
+  }
+}
+
+export function ForgetPasswordThunk (email: string) {
+  return async (dispatch: Dispatch) => {
+    return UserService.forgetPassword(email, dispatch)
   }
 }
 
