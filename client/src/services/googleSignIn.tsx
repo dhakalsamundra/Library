@@ -1,7 +1,8 @@
 import axios from 'axios'
 import { Dispatch } from 'redux'
-import { userSignIn, createUser, signedUser } from '../redux/actions/'
+import { userSignIn, createUser, signedUser, PasswordResetLink } from '../redux/actions/'
 import { AddUser, SignIn } from '../types'
+import user from '../redux/reducers/user'
 
 const baseUrl = 'http://localhost:3001/api/v1/auth'
 
@@ -38,5 +39,16 @@ async function signInUser (user: SignIn, dispatch: Dispatch) {
   }
 }
 
+async function forgetPassword (email: string, dispatch: Dispatch) {
+  try {
+    const url = `${baseUrl}/resetPasswordRequest`
+    const data = email
+    const response = await axios.post(url, data)
+    dispatch(PasswordResetLink(response.data))
+  } catch (error) {
+    console.log(error)
+  }
+}
 
-export default { signIn, create, signInUser}
+
+export default { signIn, create, signInUser, forgetPassword}
