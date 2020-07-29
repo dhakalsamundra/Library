@@ -6,6 +6,8 @@ import {
   createBook,
   removeBook,
   bookUpdate,
+  borrowBook,
+  unBorrowBook,
 } from '../redux/actions/book'
 import { Book, AddBook } from '../types'
 
@@ -69,4 +71,26 @@ const updateBook = async (book: Book, dispatch: Dispatch) => {
   }
 }
 
-export default { getAll, create, deleteBook, updateBook }
+const borrow = async (book: Book, dispatch: Dispatch) => {
+  try {
+    const url = `${baseUrl}/${book._id}/borrow`
+    const data = book
+    const response = await axios.put(url, data)
+    dispatch(borrowBook(response.data))
+  } catch(error) {
+    console.log('this is the error', error)
+  }
+}
+
+const unBorrow = async (book: Book, dispatch: Dispatch) => {
+  try {
+    const url = `${baseUrl}/${book._id}/return`
+    const data = book
+    const response = await axios.put(url, data)  
+    dispatch(unBorrowBook(response.data))
+  } catch (error) {
+    console.log('this is the error', error)
+  }
+}
+
+export default { getAll, create, deleteBook, updateBook, borrow, unBorrow }
