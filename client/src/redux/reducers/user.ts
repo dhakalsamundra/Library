@@ -1,4 +1,4 @@
-import { GOOGLE_SIGNIN, UserActions, SIGNOUT, UserState, REGISTER_USER, SIGNIN, FORGET_PASSWORD } from '../../types'
+import { GOOGLE_SIGNIN, UserActions, SIGNOUT, UserState, REGISTER_USER, SIGNIN, FORGET_PASSWORD, UPDATE_PASSWORD } from '../../types'
 
 export default function user(
   state: UserState = { users: [], isAuthorized: false, inCart: []
@@ -27,7 +27,10 @@ export default function user(
       const {email} = action.payload
       return  {...state}
     }
-
+    // case UPDATE_PASSWORD: {
+    //   const {password} = action.payload
+    //   return {...state, users: state.users.map((oldPassword) => oldPassword.password === password.password ? password: oldPassword)}
+    // }
     default:
       return state
   }
