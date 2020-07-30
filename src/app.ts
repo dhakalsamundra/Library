@@ -18,7 +18,9 @@ import authorRouter from './routers/author'
 import authRouter from './routers/auth'
 import apiErrorHandler from './middlewares/apiErrorHandler'
 import apiContentType from './middlewares/apiContentType'
+import authJwt from './middlewares/auth'
 import './config/passport'
+// import unless from './util/auth'
 
 const app = express()
 const corsOption = {
@@ -53,6 +55,8 @@ mongoose
 // Express configuration
 app.set('port', process.env.PORT || 3001)
 
+// const excludedPaths = [ /v1\/users/, /v1\/auth/, /v1\/books/]
+
 // Use common 3rd-party middlewares
 
 app.use(passport.initialize())
@@ -62,6 +66,7 @@ app.use(apiContentType)
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(lusca.xframe('SAMEORIGIN'))
 app.use(lusca.xssProtection(true))
+// app.use('/api', apiContentType, unless(excludedPaths, authJwt))
 
 // Use  router
 app.use('/api/v1/auth', authRouter)

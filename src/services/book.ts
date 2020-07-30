@@ -10,11 +10,11 @@ async function findAll(): Promise<BookDocument[]> {
   return Book.find().sort({ title: 1, publishedDate: -1 }).exec()
 }
 type queryPayload = {
-  title?: string
-  status?: string
-  publisher?: string
-  author?: string
-  genres?: string
+  title?: string;
+  status?: string;
+  publisher?: string;
+  author?: string;
+  genres?: string;
 }
 async function filteredByQuery(query: queryPayload): Promise<BookDocument[]> {
   const myFilter: queryPayload = {}
@@ -104,13 +104,13 @@ function borrowBook(bookId: string, userId: string) {
         throw new Error(`Book ${bookId} not found`)
       }
       if (book.status === 'borrowed') {
-        throw new BadRequestError(`${bookId} has been borrowed.`)
+        throw new BadRequestError(`Book ${bookId} has been borrowed.`)
       } else {
         const user = await UserService.findById(userId)
         book.borrowedDate = new Date()
         // once borrowed the book, status of available should be changed to borrowed from default.
         book.status = 'borrowed'
-        book.borrowerId = user.id
+        book.borrowerId = user._id
 
         return book.save()
       }

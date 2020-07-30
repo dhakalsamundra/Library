@@ -1,6 +1,5 @@
 import User, { UserDocument } from '../models/User'
 
-
 function findById(userId: string): Promise<UserDocument> {
   return User.findById(userId)
     .exec()
@@ -47,5 +46,5 @@ export default {
   findAll,
   deleteUser,
   findById,
-  update
+  update,
 }

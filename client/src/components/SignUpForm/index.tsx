@@ -52,33 +52,33 @@ return (
       <div className="register">
         <form method= "POST" onSubmit={handleSubmit}>
           <div className="register-firstname">
-          <label htmlFor="firstName">First Name:</label>
+          <label>First Name:</label>
           <input className="firstName" type="text" value={firstName} onChange={handleChangeFirstName} /></div>
           <br></br>
 
           <div className="register-lastname">
-          <label htmlFor="lastName">Last Name:</label>
+          <label>Last Name:</label>
           <input className="lastName" type="text" value={lastName} onChange={handleChangeLastName} /></div>
           <br></br>
 
           <div className="register-email">
-          <label htmlFor="email">Email:</label>
+          <label>Email:</label>
           <input className="email" type="text" value={email} onChange={handleChangeEmail} /></div>
           <br></br>
 
           <div className="register-username">
-          <label htmlFor="userName">UserName:</label>
+          <label>UserName:</label>
           <input className="userName" type="text" value={userName} onChange={handleChangeUserName} /></div>
           <br></br>
 
           <div className="password">
-          <label htmlFor="Password">Password:</label>
-          <input className="password" type="text" value={password} onChange={handleChangePassword} /></div>
+          <label>Password:</label>
+          <input className="cPassword" type="password" value={password} onChange={handleChangePassword} /></div>
           <br></br>
 
           <div className="password">
-          <label htmlFor="confirmPassword">Confirm Password:</label>
-          <input className="cPassword" type="text" value={confirmPassword} onChange={handleChangeConfirmPassword} /></div>
+          <label>Confirm Password:</label>
+          <input className="cPassword" type="password" value={confirmPassword} onChange={handleChangeConfirmPassword} /></div>
           <br></br>
           <button value="submit">Register</button>
         </form>
