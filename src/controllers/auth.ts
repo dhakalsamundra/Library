@@ -156,47 +156,32 @@ export const passwordRequestReset = async (
   res: Response,
   next: NextFunction
 ) => {
-  const { email } = req.body
-  const user = await User.findOne({ email })
-
-  if (user) {
-    await user.generatePasswordReset()
-    try {
-      await user.save()
-
-      const link = `http://${req.headers.host}/api/v1/auth/reset-password/${user.resetPasswordToken}`
-      sgMail.setApiKey(SENDGRID_API_KEY)
-
-      const mailOptions = {
-        to: user.email,
-        from: FROM_MAIL,
-        subject: 'Password change request',
-        text: `Hi ${user.userName},
-          Please click on the following link ${link} to reset your password.
-          
-          If you did not request this, please ignore this email and your password will remain unchanged.`,
-      }
-
-      try {
-        const sendMail = await sgMail.send(mailOptions)
-        if (sendMail) {
-          res.json({
-            message: `A reset email has been sent to ${user.email} .`,
-          })
-        } else {
-          next(new BadRequestError('Reset Email could not be sent'))
-        }
-      } catch (error) {
-        next(new BadRequestError(error))
-      }
-    } catch (error) {
-      next(new BadRequestError(error))
+  try {
+    const { email } = req.body
+    const user = await User.findOne({ email })
+    if (!user)
+      return res.json({
+        message:
+          'This email is not associated. Please check your email address.',
+      })
+    // generate and set the password reset token to the user database
+    user.generatePasswordReset()
+    await user.save()
+    const link = `http://${req.headers.host}/api/v1/auth/reset-password/${user.resetPasswordToken}`
+    sgMail.setApiKey(SENDGRID_API_KEY)
+    //send email
+    const mailOptions = {
+      to: user.email,
+      from: FROM_MAIL,
+      subject: 'password change request',
+      text: `Hi ${user.userName}, click on this link to reset the password.
+      ${link}`,
     }
-  } else {
-    next(
-      new NotFoundError(
-        `The email address, ${email} is not associated with any account.`
-      )
-    )
+    const sendMail = await sgMail.send(mailOptions)
+    if (sendMail) {
+      res.json({ message: 'Reset link has been sent to your email address.' })
+    }
+  } catch (error) {
+    next(new BadRequestError('Invalid Request', error))
   }
 }
