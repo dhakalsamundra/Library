@@ -49,7 +49,7 @@ export const PasswordResetLink = (email: string) => {
 
 export function googleSignInThunk(tokenId: string) {
   return async (dispatch: Dispatch) => {
-    return UserService.signIn(tokenId, dispatch)
+    return UserService.GoogleSignIn(tokenId, dispatch)
   }
 }
 
