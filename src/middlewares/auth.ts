@@ -12,9 +12,9 @@ export default async function authJwt(
   try {
     const token = req.headers['authorization']?.replace('Bearer ', '') || ''
 
-    const decoded = (await jwt.verify(token, JWT_SECRET)) as any
-    const user = await Users.findOne({ googleId: decoded.googleId })
-    req.user = user as any
+    const decoded = (await jwt.verify(token, JWT_SECRET)) as { email: string }
+    const user = await Users.findOne({ email: decoded.email })
+    req.user = user as {}
     next()
   } catch (error) {
     return next(new ForbiddenError())
