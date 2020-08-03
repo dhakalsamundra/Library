@@ -8,7 +8,7 @@ passport.use(
     {
       clientID: GOOGLE_CLIENT_ID,
     },
-    async function (parsedToken: any, googleId: string, done: any) {
+    async function (parsedToken: any, done: Function) {
       if (
         parsedToken?.payload.email &&
         parsedToken?.payload.email_verified === true
@@ -18,6 +18,7 @@ passport.use(
           firstName: parsedToken?.payload.given_name,
           lastName: parsedToken?.payload.family_name,
           picture: parsedToken?.payload.picture,
+          userName: parsedToken?.payload.given_name,
         }
 
         try {
