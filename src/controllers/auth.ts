@@ -174,7 +174,7 @@ export const passwordRequestReset = async (
       to: user.email,
       from: FROM_MAIL,
       subject: 'password change request',
-      text: `Hi ${user.userName}, click on this link to reset the password.
+      text: `Hi ${user.firstName}, click on this link to reset the password.
       ${link}`,
     }
     const sendMail = await sgMail.send(mailOptions)
@@ -183,5 +183,18 @@ export const passwordRequestReset = async (
     }
   } catch (error) {
     next(new BadRequestError('Invalid Request', error))
+  }
+}
+
+export const passwordTokenStatus = async (req: Request, res: Response) => {
+  try {
+    const { token } = req.params
+    const user = await User.findOne({
+      resetPasswordToken: token,
+      resetPasswordExpires: { $gt: Date.now() },
+    })
+    if (user) res.redirect('redirect page to the new password page')
+  } catch (error) {
+    res.json(error)
   }
 }
