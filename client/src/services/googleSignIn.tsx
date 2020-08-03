@@ -11,8 +11,6 @@ async function GoogleSignIn(tokenId: string, dispatch: Dispatch) {
     const response = await axios.post(url, {
       id_token: tokenId,
     })
-    // console.log('this is the final idtoken', response)
-    // console.log('this is the final idtoken', response.data.token)
     localStorage.setItem('signIn-token', response.data.token)
     dispatch(userSignIn(response.data.token))
   } catch (error) {
