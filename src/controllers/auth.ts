@@ -198,3 +198,27 @@ export const passwordTokenStatus = async (req: Request, res: Response) => {
     res.json(error)
   }
 }
+
+export const resetPassword = async (req: Request, res: Response) => {
+  try {
+    const { token } = req.params
+    const user = await User.findOne({
+      resetPasswordToken: token,
+      resetPasswordExpires: { $gt: Date.now() },
+    })
+    if (!user)
+      return res.json({
+        message:
+          'token is invalid or expired. So resend the forget password request.',
+      })
+    // set the new password in bcrypt
+    const salt = bcrypt.genSaltSync(10)
+    const hashed = await bcrypt.hashSync(req.body.password, salt)
+    //set the new password in database
+    user.password = hashed
+    user.resetPasswordToken = undefined
+    user.resetPasswordExpires = undefined
+  } catch (error) {
+    res.json(error)
+  }
+}
