@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { Dispatch } from 'redux'
-import { userSignIn, createUser, signedUser, PasswordResetLink } from '../redux/actions/'
-import { AddUser, SignIn } from '../types'
+import { userSignIn, createUser, signedUser, PasswordResetLink, resetNewPasswod } from '../redux/actions/'
+import { AddUser, SignIn, newPassword } from '../types'
 
 const baseUrl = 'http://localhost:3001/api/v1/auth'
 
@@ -38,13 +38,20 @@ async function signInUser (user: SignIn, dispatch: Dispatch) {
 
 async function forgetPassword (email: string, dispatch: Dispatch) {
   try {
-    console.log('samundra')
-    const response = await axios({ method: 'POST', url: baseUrl + '/resetPasswordRequest', data: email})
+    console.log('this is forget password', email)
+    const response = await axios({ method: 'POST', url: baseUrl + '/resetPassword', data: email})
     dispatch(PasswordResetLink(response.data))
   } catch (error) {
     console.log('error')
   }
 }
+async function resetPassword (password: newPassword, dispatch: Dispatch) {
+  try{
+    const response = await axios({method: 'POST', url: baseUrl, data: password})
+    dispatch(resetNewPasswod(response.data))
+  } catch(error){
+    console.log(error)
+  }
+}
 
-
-export default { GoogleSignIn, create, signInUser, forgetPassword}
+export default { GoogleSignIn, create, signInUser, forgetPassword, resetPassword}
