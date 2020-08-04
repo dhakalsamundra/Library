@@ -7,6 +7,7 @@ import Author from './components/Author'
 import Register from './components/SignUpForm'
 import userHome from './pages/userHome'
 import resetLink from './pages/resetPassword/resetPasswordLink'
+import ResetPassword from './pages/newPassword'
 const Routes = () => (
   <Switch>
     <Route exact path="/" component={LandingPage} />
@@ -15,6 +16,9 @@ const Routes = () => (
     <Route exact path="/register" component={Register} />
     <Route exact path="/dashboard" component={userHome} />
     <Route exact path="/forgetPassword" component={resetLink} />
+    <Route exact path="/updatePassword/:token" component={ResetPassword} />
+
+
 
   </Switch>
 )
