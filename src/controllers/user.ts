@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express'
 
 import UserService from '../services/user'
-import { NotFoundError, BadRequestError } from '../helpers/apiError'
+import { NotFoundError } from '../helpers/apiError'
 
 export const findAllUser = async (
   req: Request,

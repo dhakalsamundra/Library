@@ -193,7 +193,13 @@ export const passwordTokenStatus = async (req: Request, res: Response) => {
       resetPasswordToken: token,
       resetPasswordExpires: { $gt: Date.now() },
     })
-    if (user) res.redirect('redirect page to the new password page')
+    if (user) {
+      res.redirect(
+        `http://localhost:3000/updatePassword/${user.resetPasswordToken}`
+      )
+    } else {
+      throw new InternalServerError()
+    }
   } catch (error) {
     res.json(error)
   }

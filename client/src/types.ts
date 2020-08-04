@@ -203,6 +203,10 @@ export type SignIn = {
   email: string,
   password: string
 }
+export type newPassword = {
+  password: string,
+  confirmPassword: string
+}
 export type SignInAction = {
   type: typeof GOOGLE_SIGNIN
   payload: {
