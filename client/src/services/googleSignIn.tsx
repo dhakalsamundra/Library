@@ -39,7 +39,7 @@ async function signInUser (user: SignIn, dispatch: Dispatch) {
 async function forgetPassword (email: string, dispatch: Dispatch) {
   try {
     console.log('this is forget password', email)
-    const response = await axios({ method: 'POST', url: baseUrl + '/resetPassword', data: email})
+    const response = await axios({ method: 'POST', url: baseUrl + '/resetPasswordRequest', data: {email}})
     dispatch(PasswordResetLink(response.data))
   } catch (error) {
     console.log('error')
