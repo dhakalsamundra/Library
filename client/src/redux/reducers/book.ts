@@ -4,8 +4,6 @@ import {
   GET_ALL_BOOKS,
   CREATE_BOOK,
   REMOVE_BOOK,
-  ADD_BOOK_IN_CART,
-  REMOVE_BOOK_IN_CART,
   SEARCH_BOOK,
   UPDATE_BOOK,
   BORROW_BOOK,
@@ -14,9 +12,9 @@ import {
 
 export default function book(
   state: BookState = {
-    items: [],
+    items: [], 
     inCart: []
-  },
+    },
   action: BookActions
 ): BookState {
   switch (action.type) {
@@ -28,20 +26,7 @@ export default function book(
       const { book } = action.payload
       return { ...state, items: [...state.items, book] }
     }
-    case ADD_BOOK_IN_CART: {
-      const {book} = action.payload
-      return { ...state, inCart: [...state.inCart, book]}
-    }
-    case REMOVE_BOOK_IN_CART: {
-      const {book} = action.payload
-      const index = state.inCart.findIndex((p) => p._id === book._id)
-      if (index >= 0) {
-        //removing the book in that index
-        state.inCart.splice(index,1)
-        return { ...state, inCart: [...state.inCart]}
-      }
-      return state
-    }
+
     case REMOVE_BOOK: {
       const { book } = action.payload
       const newItems = state.items.filter((item) => item._id !== book._id)
@@ -59,7 +44,16 @@ export default function book(
     case BORROW_BOOK: {
       const {book} = action.payload
       return {
-        ...state, /*items: state.items.map(element => element._id === book._id ? {status: book.status} : element.status)*/
+        ...state, inCart: [...state.inCart, book]
+      }
+    }
+    case UNBORROW_BOOK: {
+      const {book} = action.payload
+      const index = state.inCart.findIndex((p)=> p._id === book._id )
+      if (index >= 0) {
+        // remove the particular book in that index from cart
+        state.inCart.splice(index, 1)
+        return { ...state, inCart: [ ...state.inCart]}
       }
     }
     // case SEARCH_BOOK: {
