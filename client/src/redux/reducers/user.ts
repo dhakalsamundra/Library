@@ -1,7 +1,7 @@
 import { GOOGLE_SIGNIN, UserActions, SIGNOUT, UserState, REGISTER_USER, SIGNIN, FORGET_PASSWORD, UPDATE_PASSWORD } from '../../types'
 
 export default function user(
-  state: UserState = { users: [], isAuthorized: false, inCart: []
+  state: UserState = { users: [], isAuthorized: false, inCart: [], currentUser: null
   },
   action: UserActions
 ): UserState {
@@ -10,10 +10,10 @@ export default function user(
 
     case GOOGLE_SIGNIN: {
       const { user } = action.payload
-      return { ...state, users: [...state.users, user], isAuthorized: true }
+      return { ...state, users: [...state.users, user], isAuthorized: true, currentUser: user }
     }
     case SIGNOUT: {
-      return { ...state, isAuthorized: false}
+      return { ...state, isAuthorized: false, currentUser: null}
     }
     case REGISTER_USER: {
       const {user} = action.payload
@@ -21,7 +21,8 @@ export default function user(
     }
     case SIGNIN: {
       const {user} = action.payload
-      return {...state, users: [...state.users, user], isAuthorized: true}
+      return {...state, users: [...state.users, user], isAuthorized: true, currentUser: user
+      }
     }
     case FORGET_PASSWORD: {
       const {email} = action.payload
