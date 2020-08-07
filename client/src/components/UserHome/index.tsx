@@ -17,6 +17,7 @@ import { AppState } from '../../types'
 
 export default function BookTable() {
   const items = useSelector((state: AppState) => state.book.items)
+  const user = useSelector((state: AppState) => state.user.users)
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(fetchBooksThunk())
@@ -26,6 +27,7 @@ export default function BookTable() {
     const item = items.find((book) => book._id === id)
     if (item) {
       dispatch(borrowBookThunk(item))
+      console.log('this is begining in borrow', item)
     }
   }
 
@@ -59,7 +61,7 @@ export default function BookTable() {
             <TableCell>{book.author}</TableCell>
             <TableCell>
         <Button size="small" variant="contained" color="primary" onClick={() => handleBorrowChange(book._id)}>
-          Borrow
+          {book.status}
         </Button>
             </TableCell>
           </TableRow>
