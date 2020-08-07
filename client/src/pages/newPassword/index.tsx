@@ -3,11 +3,11 @@ import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 
 import { AddUser } from '../../types'
-import {addUserThunk} from '../../redux/actions'
+import {addUserThunk, addNewPasswordThunk} from '../../redux/actions'
 // import './style.scss'
 
 
-export default function Register() {
+export default function NewPassword() {
   const dispatch = useDispatch()
   const history = useHistory()
   const [password, setPassword] = useState('')
@@ -25,11 +25,10 @@ export default function Register() {
   if (password !== confirmPassword){
     console.log('password is not matching')
   } else {
-    const newUser = {
+    const newPassword = {
      password, confirmPassword
       }
-    //   dispatch(addUserThunk(newUser))
-    //   history.push('/')
+    dispatch(addNewPasswordThunk(newPassword))
   }
   }
 return (
