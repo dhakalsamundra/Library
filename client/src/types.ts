@@ -191,6 +191,8 @@ export type User = {
   role: string
 }
 
+
+
 export type AddUser = {
   firstName: string,
   lastName: string,
@@ -206,6 +208,11 @@ export type SignIn = {
 export type newPassword = {
   password: string,
   confirmPassword: string
+}
+export type UpdatePassword = {
+  oldPassword: string,
+  newPassword: string,
+  confirmNewPassword: string
 }
 export type SignInAction = {
   type: typeof GOOGLE_SIGNIN
@@ -275,6 +282,7 @@ export type UserState = {
   users: User[],
   isAuthorized: Boolean,
   inCart: User[]
+  currentUser: User | null
 }
 
 export type AppState = {
