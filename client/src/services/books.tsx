@@ -9,7 +9,7 @@ import {
   borrowBook,
   unBorrowBook,
 } from '../redux/actions/book'
-import { Book, AddBook } from '../types'
+import { Book, AddBook, User } from '../types'
 
 // by doing this, we don't need to put all authorization headers inside each function
 // (function() {
@@ -73,9 +73,9 @@ const updateBook = async (book: Book, dispatch: Dispatch) => {
 
 const borrow = async (book: Book, dispatch: Dispatch) => {
   try {
-    const url = `${baseUrl}/${book._id}/borrow`
-    const data = book
-    const response = await axios.put(url, data)
+
+    const response = await axios({method: 'PUT', url: `${baseUrl}/${book._id}/borrow`, data: book})
+    console.log('service borrow', book)
     dispatch(borrowBook(response.data))
   } catch(error) {
     console.log('this is the error', error)
