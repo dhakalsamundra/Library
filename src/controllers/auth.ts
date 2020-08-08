@@ -97,7 +97,10 @@ export const UpdatePassword = async (
   next: NextFunction
 ) => {
   try {
-    const { oldPassword, newPassword } = req.body
+    const { oldPassword, newPassword } = req.body.data as {
+      oldPassword: string;
+      newPassword: string;
+    }
     const user = await UserService.findById(req.params._id)
     if (user) {
       const comparePassword = await bcrypt.compareSync(
@@ -107,10 +110,16 @@ export const UpdatePassword = async (
       if (!comparePassword) {
         throw new BadRequestError('old password is incorrect')
       } else {
-        const salt = await bcrypt.genSaltSync(10)
-        const hashed = await bcrypt.hashSync(newPassword, salt)
-        user.password = hashed
-        await user.save()
+        if (!isPassword(newPassword)) {
+          throw new Error(
+            'Password length must be minimun 8 character lonh with one uppercase an d lowercase as well as one special character.'
+          )
+        } else {
+          const salt = bcrypt.genSaltSync(10)
+          const hashed = bcrypt.hashSync(newPassword, salt)
+          user.password = hashed
+          user.save()
+        }
       }
     }
   } catch (error) {
@@ -167,7 +176,7 @@ export const passwordRequestReset = async (
     // generate and set the password reset token to the user database
     user.generatePasswordReset()
     await user.save()
-    const link = `http://${req.headers.host}/api/v1/auth/reset-password/${user.resetPasswordToken}`
+    const link = `http://${req.headers.host}/api/v1/auth/validateToken/${user.resetPasswordToken}`
     sgMail.setApiKey(SENDGRID_API_KEY)
     //send email
     const mailOptions = {
@@ -179,14 +188,14 @@ export const passwordRequestReset = async (
     }
     const sendMail = await sgMail.send(mailOptions)
     if (sendMail) {
-      res.json({ message: 'Reset link has been sent to your email address.' })
+      res.send({ message: 'Reset link has been sent to your email address.' })
     }
   } catch (error) {
     next(new BadRequestError('Invalid Request', error))
   }
 }
 
-export const passwordTokenStatus = async (req: Request, res: Response) => {
+export const resetPasswordTokenStatus = async (req: Request, res: Response) => {
   try {
     const { token } = req.params
     const user = await User.findOne({
@@ -201,7 +210,7 @@ export const passwordTokenStatus = async (req: Request, res: Response) => {
       throw new InternalServerError()
     }
   } catch (error) {
-    res.json(error)
+    res.send('password token is expired. so resend the new reset password.')
   }
 }
 
