@@ -28,6 +28,7 @@ const isPassword = (password: string) => {
 }
 export const authenticateUser = async (req: Request, res: Response) => {
   const {
+    id,
     email,
     firstName,
     lastName,
@@ -35,13 +36,15 @@ export const authenticateUser = async (req: Request, res: Response) => {
     userName,
     role,
   } = req.user as UserDocument
+
   const token = jwt.sign(
-    { email, firstName, userName, lastName, picture, role },
+    { id, email, firstName, userName, lastName, picture, role },
     JWT_SECRET,
     {
       expiresIn: '1h',
     }
   )
+  console.log('token', token)
   res.json(token)
 }
 
@@ -101,7 +104,7 @@ export const UpdatePassword = async (
       oldPassword: string;
       newPassword: string;
     }
-    const user = await UserService.findById(req.params._id)
+    const user = await UserService.findById(req.params.userId)
     if (user) {
       const comparePassword = await bcrypt.compareSync(
         oldPassword,
@@ -144,11 +147,13 @@ export const signIn = async (
     } else {
       const token = jwt.sign(
         {
+          id: user._id,
           email: user.email,
           userName: user.userName,
           firstName: user.firstName,
           lastName: user.lastName,
           role: user.role,
+          picture: user.picture,
         },
         JWT_SECRET,
         { expiresIn: '1h' }
@@ -176,7 +181,7 @@ export const passwordRequestReset = async (
     // generate and set the password reset token to the user database
     user.generatePasswordReset()
     await user.save()
-    const link = `http://${req.headers.host}/api/v1/auth/validateToken/${user.resetPasswordToken}`
+    const link = `http://${req.headers.host}/api/v1/auth/resetPasswordRequest/${user.resetPasswordToken}`
     sgMail.setApiKey(SENDGRID_API_KEY)
     //send email
     const mailOptions = {
@@ -188,7 +193,7 @@ export const passwordRequestReset = async (
     }
     const sendMail = await sgMail.send(mailOptions)
     if (sendMail) {
-      res.send({ message: 'Reset link has been sent to your email address.' })
+      res.json({ message: 'Reset link has been sent to your email address.' })
     }
   } catch (error) {
     next(new BadRequestError('Invalid Request', error))
@@ -202,13 +207,13 @@ export const resetPasswordTokenStatus = async (req: Request, res: Response) => {
       resetPasswordToken: token,
       resetPasswordExpires: { $gt: Date.now() },
     })
-    if (user) {
-      res.redirect(
-        `http://localhost:3000/updatePassword/${user.resetPasswordToken}`
-      )
-    } else {
-      throw new InternalServerError()
-    }
+    if (!user)
+      return res
+        .status(401)
+        .json({ message: 'Password reset token is invalid or has expired.' })
+    res.redirect(
+      `http://localhost:3000/updatePassword/${user.resetPasswordToken}`
+    )
   } catch (error) {
     res.send('password token is expired. so resend the new reset password.')
   }
@@ -221,18 +226,28 @@ export const resetPassword = async (req: Request, res: Response) => {
       resetPasswordToken: token,
       resetPasswordExpires: { $gt: Date.now() },
     })
-    if (!user)
-      return res.json({
-        message:
-          'token is invalid or expired. So resend the forget password request.',
-      })
-    // set the new password in bcrypt
-    const salt = bcrypt.genSaltSync(10)
-    const hashed = await bcrypt.hashSync(req.body.password, salt)
-    //set the new password in database
-    user.password = hashed
-    user.resetPasswordToken = undefined
-    user.resetPasswordExpires = undefined
+    if (!user) {
+      throw new NotFoundError('Password reset token is invalid or has expired.')
+    } else {
+      // set the new password in bcrypt
+      const salt = bcrypt.genSaltSync(10)
+      const hashed = await bcrypt.hashSync(req.body.password, salt)
+      //set the new password in database
+      user.password = hashed
+      user.resetPasswordToken = undefined
+      user.resetPasswordExpires = undefined
+    }
+    user.save()
+    const mailOptions = {
+      to: user.email,
+      from: FROM_MAIL,
+      subject: 'New Password has been added.',
+      text: `Hi ${user.userName}, this is a confirmation mail of changing the password.`,
+    }
+    const sendMail = await sgMail.send(mailOptions)
+    if (sendMail) {
+      res.json({ message: 'Login with your new password now.' })
+    }
   } catch (error) {
     res.json(error)
   }
