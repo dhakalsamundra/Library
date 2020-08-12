@@ -8,17 +8,25 @@ passport.use(
     {
       clientID: GOOGLE_CLIENT_ID,
     },
-    async function (parsedToken: any, done: Function) {
+    async function (parsedToken: any, googleId: string, done: any) {
       if (
         parsedToken?.payload.email &&
         parsedToken?.payload.email_verified === true
       ) {
         const userPayload = {
+          googleId: googleId,
           email: parsedToken?.payload.email,
           firstName: parsedToken?.payload.given_name,
           lastName: parsedToken?.payload.family_name,
           picture: parsedToken?.payload.picture,
           userName: parsedToken?.payload.given_name,
+          role: parsedToken.payload,
+        }
+        if (userPayload.email === 'dhakalsamundra35@gmail.com') {
+          userPayload.role = 'superadmin'
+        }
+        if (userPayload.email === 'samundra.dhakal@integrify.io') {
+          userPayload.role = 'admin'
         }
 
         try {
