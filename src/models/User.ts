@@ -30,6 +30,8 @@ const userSchema = new mongoose.Schema({
   },
   picture: {
     type: String,
+    default:
+      'https://pixabay.com/vectors/blank-profile-picture-mystery-man-973460/',
   },
   password: {
     type: String,
