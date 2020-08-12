@@ -1,9 +1,8 @@
 import React, {useState} from 'react'
 import { useDispatch } from 'react-redux'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 
-import { AddUser } from '../../types'
-import {addUserThunk, addNewPasswordThunk} from '../../redux/actions'
+import { addNewPasswordThunk} from '../../redux/actions'
 // import './style.scss'
 
 
@@ -12,6 +11,7 @@ export default function NewPassword() {
   const history = useHistory()
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword ] = useState('')
+  const { token } = useParams()
 
   const handleChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value)
@@ -25,10 +25,8 @@ export default function NewPassword() {
   if (password !== confirmPassword){
     console.log('password is not matching')
   } else {
-    const newPassword = {
-     password, confirmPassword
-      }
-    dispatch(addNewPasswordThunk(newPassword))
+    dispatch(addNewPasswordThunk(password, token))
+    history.push('/')
   }
   }
 return (
