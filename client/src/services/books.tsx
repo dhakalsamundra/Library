@@ -9,7 +9,7 @@ import {
   borrowBook,
   unBorrowBook,
 } from '../redux/actions/book'
-import { Book, AddBook, User } from '../types'
+import { Book, AddBook } from '../types'
 
 // by doing this, we don't need to put all authorization headers inside each function
 // (function() {
@@ -48,7 +48,7 @@ const create = async (book: AddBook, dispatch: Dispatch) => {
 
 const deleteBook = async (book: Book, dispatch: Dispatch) => {
   try {
-    const response = await axios({
+    await axios({
       method: 'DELETE',
       url: `${baseUrl}/${book._id}`,
       data: book,

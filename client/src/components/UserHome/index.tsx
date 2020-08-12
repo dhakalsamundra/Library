@@ -6,10 +6,8 @@ import {
   TableCell,
   Table,
   TableBody,
-  IconButton,
   Button,
 } from '@material-ui/core'
-import DeleteIcon from '@material-ui/icons/Delete'
 
 import { borrowBookThunk, unBorrowBookThunk} from '../../redux/actions'
 import {fetchBooksThunk } from '../../redux/actions'
@@ -17,7 +15,6 @@ import { AppState } from '../../types'
 
 export default function BookTable() {
   const items = useSelector((state: AppState) => state.book.items)
-  const user = useSelector((state: AppState) => state.user.users)
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(fetchBooksThunk())

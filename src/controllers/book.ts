@@ -156,11 +156,7 @@ export async function borrowBook(
     const bookBorrowed = await BookService.borrowBook(bookId, userId)
     res.json(bookBorrowed)
   } catch (error) {
-    if (error.statusCode === 400) {
-      next(new BadRequestError(error))
-    } else {
-      next(new NotFoundError(error))
-    }
+    next(new NotFoundError(error))
   }
 }
 

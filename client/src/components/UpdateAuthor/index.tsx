@@ -17,6 +17,7 @@ export type UpdateAuthorProp = {
 }
 
 export default function AddAuthor({ author }: UpdateAuthorProp) {
+
   const [open, setOpen] = useState(false)
   const [newFirstName, setNewFirstName] = useState(author.firstName)
   const [newLastName, setNewLastName] = useState(author.lastName)

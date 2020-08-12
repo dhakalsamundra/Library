@@ -46,6 +46,7 @@
     "fbgraph": "^1.4.4",
     "husky": "^4.2.3",
     "jsonwebtoken": "^8.5.1",
+    "jwt-decode": "^2.2.0",
     "lint-staged": "^10.0.8",
     "lodash": "^4.17.15",
     "lusca": "^1.6.1",

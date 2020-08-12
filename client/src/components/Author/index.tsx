@@ -1,6 +1,6 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import clsx from 'clsx'
 import { useTheme } from '@material-ui/core/styles'
 import Drawer from '@material-ui/core/Drawer'
@@ -12,7 +12,6 @@ import Typography from '@material-ui/core/Typography'
 import Divider from '@material-ui/core/Divider'
 import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
-import SearchIcon from '@material-ui/icons/Search'
 import InputBase from '@material-ui/core/InputBase'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 
@@ -20,7 +19,6 @@ import AddAuthor from '../AddAuthor'
 import AuthorTable from '../AuthorTable'
 import { searchBook } from '../../redux/actions/book'
 import useStyles from './style'
-import { AppState } from '../../types'
 import { Button } from '@material-ui/core'
 
 export default function PersistentDrawerLeft() {
@@ -28,7 +26,7 @@ export default function PersistentDrawerLeft() {
   const theme = useTheme()
   const [open, setOpen] = React.useState(false)
 
-  const searchedBook = useSelector((state: AppState) => state.book.items)
+  // const searchedBook = useSelector((state: AppState) => state.book.items)
 
   const handleDrawerOpen = () => {
     setOpen(true)

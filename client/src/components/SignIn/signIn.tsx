@@ -30,6 +30,7 @@ const SignIn = () => {
   }
 
   useEffect(() => {
+    // if(isAuthorized && role === 'admin' || 'superadmin') {
     if(isAuthorized) {
       history.push('/home')
     }

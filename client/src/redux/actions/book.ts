@@ -11,7 +11,7 @@ import {
   AddBook,
   UPDATE_BOOK,
   BORROW_BOOK,
-  UNBORROW_BOOK
+  UNBORROW_BOOK,
 } from '../../types'
 
 export const getAllBooks = (books: Book[]): BookActions => {
@@ -49,7 +49,7 @@ export const bookUpdate = (book: Book): BookActions => {
     },
   }
 }
-
+// todo search book not done yet
 export const searchBook = (searchTerm: string): BookActions => {
   return {
     type: SEARCH_BOOK,
@@ -105,6 +105,7 @@ export function editBookThunk(book: Book) {
 
 export function borrowBookThunk(book: Book) {
   return async (dispatch: Dispatch) => {
+    console.log('action borrow', book)
     return BookServices.borrow(book, dispatch)
   }
 }

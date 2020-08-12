@@ -1,9 +1,6 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import IconButton from '@material-ui/core/IconButton'
-import DeleteIcon from '@material-ui/icons/Delete'
-
 import { unBorrowBookThunk } from '../../redux/actions'
 import { AppState } from '../../types'
 import './style.scss'
@@ -15,6 +12,7 @@ export default function Cart() {
 
   const handleUnBorrowChange = (id: string) => {
     const item = cartItems.find((book) => book._id === id)
+    console.log('cart book', item)
     if (item) {
         dispatch(unBorrowBookThunk(item))
       } 

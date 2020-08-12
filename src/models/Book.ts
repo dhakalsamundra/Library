@@ -7,8 +7,8 @@ export type BookDocument = Document & {
   ISBN: string;
   author: string[];
   borrowerId?: string;
-  borrowedDate: Date;
-  returnDate: Date;
+  borrowedDate?: Date;
+  returnDate?: Date;
   status: string;
   publishedDate: Date;
   publisher: string;

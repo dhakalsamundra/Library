@@ -1,6 +1,10 @@
 import Book, { BookDocument } from '../models/Book'
 import UserService from '../services/user'
-import { BadRequestError, NotFoundError } from '../helpers/apiError'
+import {
+  BadRequestError,
+  NotFoundError,
+  InternalServerError,
+} from '../helpers/apiError'
 
 function create(book: BookDocument): Promise<BookDocument> {
   return book.save()
@@ -96,7 +100,7 @@ function deleteBook(bookId: string): Promise<BookDocument | null> {
   return Book.findByIdAndDelete(bookId).exec()
 }
 
-function borrowBook(bookId: string, userId: string) {
+function borrowBook(bookId: string, userId: string): Promise<BookDocument> {
   return Book.findById(bookId)
     .exec()
     .then(async (book) => {
@@ -124,15 +128,10 @@ function returnBook(bookId: string): Promise<BookDocument> {
       if (!book) {
         throw new Error(`Book ${bookId} not found`)
       } else {
-        if (book.status === 'borrowed') {
-          throw new NotFoundError(
-            `Book will only be available in library from ${book.returnDate}`
-          )
-        } else {
-          // once unborrowed the book, status should be changed to available.
-          book.status = 'available'
-          return book.save()
-        }
+        ;(book.status = 'available'),
+          (book.borrowerId = undefined),
+          (book.borrowedDate = undefined)
+        return book.save()
       }
     })
 }

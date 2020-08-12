@@ -7,7 +7,7 @@ import {
   signIn,
   passwordRequestReset,
   UpdatePassword,
-  passwordTokenStatus,
+  resetPasswordTokenStatus,
   resetPassword,
 } from '../controllers/auth'
 
@@ -20,9 +20,9 @@ router.post(
 )
 router.post('/', signUp)
 router.post('/signIn', signIn)
-router.put('/updatePassword/:userId', UpdatePassword)
+router.post('/updatePassword/:userId', UpdatePassword)
 router.post('/resetPasswordRequest', passwordRequestReset)
-router.get('/reset/:token', passwordTokenStatus)
-router.post('/reset/:token', resetPassword)
+router.get('/resetPasswordRequest/:token', resetPasswordTokenStatus)
+router.post('/resetPasswordRequest/:token', resetPassword)
 
 export default router

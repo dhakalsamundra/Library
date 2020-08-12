@@ -34,7 +34,7 @@ const create = async (newAuthor: AddAuthor, dispatch: Dispatch) => {
 
 const deleteAuthor = async (author: Author, dispatch: Dispatch) => {
   try {
-    const response = await axios({
+    await axios({
       method: 'DELETE',
       url: `${baseUrl}/${author._id}`,
       data: author,
