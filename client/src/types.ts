@@ -181,14 +181,14 @@ export type AuthorState = {
 // section of declaring the part of user and user's login
 
 export type User = {
-  _id: string
+  _id?: string
   firstName: string
   lastName: string
   email: string
   picture?: string
-  password: string
+  password?: string
   userName: string
-  role: string
+  role?: string
 }
 
 
@@ -213,6 +213,24 @@ export type UpdatePassword = {
   oldPassword: string,
   newPassword: string,
   confirmNewPassword: string
+}
+export type UserProfilePayload = {
+  id?: string,
+  firstName: string,
+  lastName: string,
+  email: string,
+  role?: string,
+  picture?: string,
+  userName: string,
+}
+export type StorageToken = {
+  id: string,
+  firstName: string,
+  lastName: string,
+  userName: string,
+  picture: string,
+  role: string,
+  email: string
 }
 export type SignInAction = {
   type: typeof GOOGLE_SIGNIN
