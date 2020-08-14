@@ -1,7 +1,7 @@
 import { GOOGLE_SIGNIN, UserActions, SIGNOUT, UserState, REGISTER_USER, SIGNIN, FORGET_PASSWORD, UPDATE_PASSWORD, UPDATE_USER } from '../../types'
 
 export default function user(
-  state: UserState = { users: [], isAuthorized: false, inCart: [], currentUser: null
+  state: UserState = { users: [], isAuthorized: false, currentUser: null
   },
   action: UserActions
 ): UserState {

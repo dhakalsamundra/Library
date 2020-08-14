@@ -9,7 +9,8 @@ import {
   borrowBook,
   unBorrowBook,
 } from '../redux/actions/book'
-import { Book, AddBook } from '../types'
+import { Book, AddBook, StorageToken } from '../types'
+import jwt_decode from 'jwt-decode'
 
 // by doing this, we don't need to put all authorization headers inside each function
 // (function() {
@@ -64,18 +65,17 @@ const updateBook = async (book: Book, dispatch: Dispatch) => {
     const url = `${baseUrl}/${book._id}`
     const data = book
     const response = await axios.put(url, data)
-    console.log('updated book from server response', response.data)
     dispatch(bookUpdate(response.data))
   } catch (error) {
     console.log('this is error ', error)
   }
 }
-
+const token = localStorage.signInToken
+const decodedToken = jwt_decode<StorageToken>(token)
 const borrow = async (book: Book, dispatch: Dispatch) => {
   try {
-
-    const response = await axios({method: 'PUT', url: `${baseUrl}/${book._id}/borrow`, data: book})
-    console.log('service borrow', book)
+    const userId = decodedToken.id
+    const response = await axios({method: 'PUT', url: `${baseUrl}/${book._id}/borrow`, data: {book, userId }})
     dispatch(borrowBook(response.data))
   } catch(error) {
     console.log('this is the error', error)

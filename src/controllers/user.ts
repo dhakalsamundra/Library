@@ -26,7 +26,7 @@ export const updateUser = async (
     const updatedUser = await UserService.update(userId, update)
     res.json(updatedUser)
   } catch (error) {
-    next(new NotFoundError('User not found', error))
+    next(new NotFoundError('User  not found', error))
   }
 }
 

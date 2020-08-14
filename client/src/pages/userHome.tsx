@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { fetchBooksThunk } from '../redux/actions/book'
-import UserHome from '../components/UserHome'
 import NavBar from '../components/NavBar'
 
 export default function Home() {
@@ -12,7 +11,6 @@ export default function Home() {
   return (
     <>
       <NavBar />
-      <UserHome />
     </>
   )
 }

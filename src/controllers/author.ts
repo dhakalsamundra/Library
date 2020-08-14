@@ -40,8 +40,8 @@ export const updateAuthor = async (
   try {
     const update = req.body
     const authorId = req.params.authorId
-    const updatedBook = await AuthorService.update(authorId, update)
-    res.json(updatedBook)
+    const updatedAuthor = await AuthorService.update(authorId, update)
+    res.json(updatedAuthor)
   } catch (error) {
     next(new NotFoundError('Author not found', error))
   }

@@ -40,7 +40,6 @@ export default function BookTable() {
         <TableRow>
           <TableCell>Title</TableCell>
           <TableCell>ISBN</TableCell>
-          <TableCell>Status</TableCell>
           <TableCell>PublishedDate</TableCell>
           <TableCell>Publisher</TableCell>
           <TableCell>Genres</TableCell>

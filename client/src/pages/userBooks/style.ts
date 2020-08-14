@@ -80,11 +80,6 @@ const useStyles = makeStyles((theme: Theme) =>
       }),
       marginLeft: 0,
     },
-    user: {
-        boxSizing: 'border-box',
-        border: '2px solid red',
-        textAlign: 'center'  
-    }
   })
 )
 

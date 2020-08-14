@@ -9,9 +9,7 @@ import DialogTitle from '@material-ui/core/DialogTitle'
 import EditIcon from '@material-ui/icons/Edit'
 
 import { useDispatch } from 'react-redux'
-import { User, UserProfilePayload, StorageToken } from '../../types'
 import { editUserThunk } from '../../redux/actions/user'
-import jwt_decode from 'jwt-decode'
 
 export default function UpdateUser() {
 
@@ -55,6 +53,10 @@ export default function UpdateUser() {
        userName: newUserName
      }
         dispatch(editUserThunk(updateUser))
+        setNewUserName('')
+        setNewFirstName('')
+        setNewLastName('')
+        setNewEmail('')
     
   }
   return (

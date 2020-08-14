@@ -1,5 +1,4 @@
 import User, { UserDocument } from '../models/User'
-import author from './author'
 
 function findById(userId: string): Promise<UserDocument> {
   return User.findById(userId)
@@ -34,6 +33,9 @@ function update(
       }
       if (update.email) {
         user.email = update.email
+      }
+      if (update.userName) {
+        user.userName = update.userName
       }
       return user.save()
     })

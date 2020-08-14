@@ -17,7 +17,6 @@ const initState: AppState = {
   user: {
     users: [],
     isAuthorized: false,
-    inCart: [],
     currentUser: null
 
   },

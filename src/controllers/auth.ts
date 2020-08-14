@@ -103,8 +103,9 @@ export const UpdatePassword = async (
     const { oldPassword, newPassword } = req.body.data as {
       oldPassword: string;
       newPassword: string;
+      confirmNewPassword: string;
     }
-    const user = await UserService.findById(req.params.userId)
+    const user = await User.findById(req.params.userId)
     if (user) {
       const comparePassword = await bcrypt.compareSync(
         oldPassword,

@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { unBorrowBookThunk } from '../../redux/actions'
 import { AppState } from '../../types'
-import './style.scss'
 import { Button } from '@material-ui/core'
 
 export default function Cart() {

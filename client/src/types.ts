@@ -299,7 +299,6 @@ export type UserActions =
 export type UserState = {
   users: User[],
   isAuthorized: Boolean,
-  inCart: User[]
   currentUser: User | null
 }
 
