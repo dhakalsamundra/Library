@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 import clsx from 'clsx'
 import Drawer from '@material-ui/core/Drawer'
 import AppBar from '@material-ui/core/AppBar'
@@ -13,15 +14,17 @@ import Badge from '@material-ui/core/Badge'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import SearchIcon from '@material-ui/icons/Search'
 import InputBase from '@material-ui/core/InputBase'
-import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart'
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 import { searchBook } from '../../redux/actions/'
+import UserHome from '../UserHome'
 import Cart from '../BookCart'
 import useStyles from './style'
 import { AppState } from '../../types'
 
 export default function NavBar() {
   const classes = useStyles()
+  const history = useHistory()
   const dispatch = useDispatch()
   const cartItems = useSelector((state: AppState) => state.book.inCart)
 
@@ -48,6 +51,9 @@ export default function NavBar() {
     e: React.ChangeEvent<HTMLInputElement>
   ): void => {
     dispatch(searchBook)
+  }
+  const changePageToUserBooks = () => {
+    history.push('/userBooks')
   }
 
   // I will dispatch action to seachCountries from here using useDispatch
@@ -89,12 +95,12 @@ export default function NavBar() {
             />
           </div>
           <IconButton
-            aria-label="shopping Cart"
+            aria-label="Account Circle"
             className={classes.grow}
-            onClick={menuToggle}
+            onClick={changePageToUserBooks}
           >
             <Badge badgeContent={cartCount} color="primary">
-              <AddShoppingCartIcon />
+              <AccountCircleIcon />
             </Badge>
           </IconButton>
           {toggleMenu ? (
@@ -125,6 +131,15 @@ export default function NavBar() {
         </List>
         <Divider />
       </Drawer>
+      <main
+        className={clsx(classes.content, {
+          [classes.contentShift]: open,
+        })}
+      >
+        <div className={classes.drawerHeader} />
+
+        <UserHome />
+      </main>
     </div>
   )
 }
