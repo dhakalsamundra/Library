@@ -1,11 +1,13 @@
 import axios from 'axios'
 import { Dispatch } from 'redux'
 import { userSignIn, createUser, signedUser, PasswordResetLink, resetNewPasswod, userUpdate } from '../redux/actions/'
-import { AddUser, SignIn, UpdatePassword, User } from '../types'
-import user from '../redux/reducers/user'
+import { AddUser, SignIn, UpdatePassword, User, StorageToken } from '../types'
+import jwt_decode from 'jwt-decode'
 
 const baseUrl = 'http://localhost:3001/api/v1/auth'
-const baseURL = 'http://localhost:3001/api/v1/user'
+
+const token = localStorage.signInToken
+const decodedToken = jwt_decode<StorageToken>(token)
 
 async function GoogleSignIn(tokenId: string, dispatch: Dispatch) {
   try {
@@ -40,7 +42,18 @@ async function signInUser (user: SignIn, dispatch: Dispatch) {
   }
 }
 
-
+const  updateUser = async (user: User, dispatch: Dispatch) => {
+    try{
+    const response = await axios({
+      method: 'PUT',
+      url: `http://localhost:3001/api/v1/users/${decodedToken.id}`,
+      data: user,
+    })
+    dispatch(userUpdate(response.data))
+  } catch (error) {
+    console.log('this is the error', error)
+  }
+}
 
 async function forgetPassword (email: string, dispatch: Dispatch) {
   try {
@@ -51,6 +64,7 @@ async function forgetPassword (email: string, dispatch: Dispatch) {
     console.log('error')
   }
 }
+
 async function resetPassword (password: string,token: string, dispatch: Dispatch) {
   try{
     const response = await axios({method: 'POST', url: baseUrl + `/resetPasswordRequest/${token}`, data: {password}})
@@ -62,8 +76,14 @@ async function resetPassword (password: string,token: string, dispatch: Dispatch
 
 async function passwordUpdate (password: UpdatePassword, dispatch: Dispatch) {
   try{
-    const response = await axios({method: 'POST', url: baseUrl + '/updatePassword', data: {password}})
+
+    const response = await axios({
+      method: 'POST',
+      url: `http://localhost:3001/api/v1/auth/updatePassword/${decodedToken.id}`, 
+      data: password
+    })
     dispatch(resetNewPasswod(response.data))
+    console.log('update password', response.data)
   } catch(error){
     console.log(error)
   }
