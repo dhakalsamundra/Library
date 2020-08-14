@@ -9,7 +9,8 @@ import userHome from './pages/userHome'
 import resetLink from './pages/resetPassword/resetPasswordLink'
 import ResetPassword from './pages/newPassword'
 import UpdatePassword from './pages/updatePassword'
-import UserProfile from './pages/userProfile'
+import UserProfile from './pages/userProfile/userProfile'
+import UserBook from './pages/userBooks/userBook'
 const Routes = () => (
   <Switch>
     <Route exact path="/" component={LandingPage} />
@@ -21,7 +22,7 @@ const Routes = () => (
     <Route exact path="/updatePassword/:token" component={ResetPassword} />
     <Route exact path="/updatePassword" component={UpdatePassword} />
     <Route exact path ="/userProfile" component={UserProfile} />
-
+    <Route exact path ="/userBooks" component={UserBook} />
 
 
   </Switch>
