@@ -31,7 +31,7 @@ export default function PasswordUpdate(){
             }
             dispatch(updatePasswordThunk(UpdatePassword))
             // todo. later change this to user profile.
-             history.push('/dashboard')
+             history.push('/home')
         }
         }
         return (
