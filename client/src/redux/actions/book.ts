@@ -12,6 +12,7 @@ import {
   UPDATE_BOOK,
   BORROW_BOOK,
   UNBORROW_BOOK,
+  GET_USER_BOOKS
 } from '../../types'
 
 export const getAllBooks = (books: Book[]): BookActions => {
@@ -20,6 +21,15 @@ export const getAllBooks = (books: Book[]): BookActions => {
     payload: {
       books,
     },
+  }
+}
+
+export const getAllUserBooks = (books: Book[]): BookActions => {
+  return {
+    type: GET_USER_BOOKS,
+    payload: {
+      books
+    }
   }
 }
 
@@ -115,3 +125,10 @@ export function unBorrowBookThunk(book: Book) {
     return BookServices.unBorrow(book, dispatch)
   }
 }
+
+export function fetchBorrowedBookThunk() {
+  return async (dispatch: Dispatch) => {
+    return BookServices.getAll(dispatch)
+  }
+}
+
