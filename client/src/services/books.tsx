@@ -8,6 +8,7 @@ import {
   bookUpdate,
   borrowBook,
   unBorrowBook,
+  getAllUserBooks,
 } from '../redux/actions/book'
 import { Book, AddBook, StorageToken } from '../types'
 import jwt_decode from 'jwt-decode'
@@ -70,8 +71,10 @@ const updateBook = async (book: Book, dispatch: Dispatch) => {
     console.log('this is error ', error)
   }
 }
+
 const token = localStorage.signInToken
 const decodedToken = jwt_decode<StorageToken>(token)
+
 const borrow = async (book: Book, dispatch: Dispatch) => {
   try {
     const userId = decodedToken.id
@@ -93,4 +96,14 @@ const unBorrow = async (book: Book, dispatch: Dispatch) => {
   }
 }
 
-export default { getAll, create, deleteBook, updateBook, borrow, unBorrow }
+const getBorrowedBook = async (dispatch: Dispatch) => {
+  try {
+    const userId = decodedToken.id
+    const response = await axios({method: 'GET', url: baseUrl + '/userBooks', data: {userId} })
+    dispatch(getAllUserBooks(response.data))
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export default { getAll, create, deleteBook, updateBook, borrow, unBorrow, getBorrowedBook }
