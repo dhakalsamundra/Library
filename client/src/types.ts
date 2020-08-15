@@ -9,6 +9,8 @@ export const UPDATE_BOOK = 'UPDATE_BOOK'
 export const SEARCH_BOOK = 'SEARCH_BOOK'
 export const BORROW_BOOK = 'BORROW_BOOK'
 export const UNBORROW_BOOK = 'UNBORROW_BOOK'
+export const GET_USER_BOOKS = 'GET_USER_BOOKS'
+
 
 // ACTION TYPE AUTHOR
 export const GET_ALL_AUTHORS = 'GET_ALL_AUTHORS'
@@ -55,6 +57,12 @@ export type AddBook = {
 
 export type getAllBooksAction = {
   type: typeof GET_ALL_BOOKS
+  payload: {
+    books: Book[]
+  }
+}
+export type getAllUserBooksAction = {
+  type: typeof GET_USER_BOOKS
   payload: {
     books: Book[]
   }
@@ -120,6 +128,7 @@ export type BookActions =
   | searchBookAction
   | borrowBookAction
   | unborrowBookAction
+  | getAllUserBooksAction
 
 export type BookState = {
   // should passed the author which have _id property too so that it is used while deleting the author
