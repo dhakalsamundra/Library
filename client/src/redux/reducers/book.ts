@@ -6,7 +6,8 @@ import {
   REMOVE_BOOK,
   UPDATE_BOOK,
   BORROW_BOOK,
-  UNBORROW_BOOK
+  UNBORROW_BOOK,
+  GET_USER_BOOKS
 } from '../../types'
 
 export default function book(
@@ -20,6 +21,10 @@ export default function book(
     case GET_ALL_BOOKS: {
       const { books } = action.payload
       return { ...state, items: books }
+    }
+    case GET_USER_BOOKS: {
+      const {books} = action.payload
+      return { ...state, inCart: books}
     }
     case CREATE_BOOK: {
       const { book } = action.payload
