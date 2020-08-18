@@ -198,6 +198,7 @@ export type User = {
   password?: string
   userName: string
   role?: string
+  books?: string[]
 }
 
 

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import {
   TableHead,
@@ -9,29 +9,18 @@ import {
   Button,
 } from '@material-ui/core'
 
-import { borrowBookThunk, unBorrowBookThunk} from '../../redux/actions'
-import {fetchBooksThunk } from '../../redux/actions'
+import { borrowBookThunk} from '../../redux/actions'
 import { AppState } from '../../types'
 
 export default function BookTable() {
   const items = useSelector((state: AppState) => state.book.items)
   const dispatch = useDispatch()
-  useEffect(() => {
-    dispatch(fetchBooksThunk())
-  }, [dispatch])
+
 
   const handleBorrowChange = (id: string) => {
     const item = items.find((book) => book._id === id)
     if (item) {
       dispatch(borrowBookThunk(item))
-      console.log('this is begining in borrow', item)
-    }
-  }
-
-  const handleUnborrowChange = (id: string) => {
-    const item = items.find((book) => book._id === id)
-    if (item) {
-      dispatch(unBorrowBookThunk(item))
     }
   }
   return (

@@ -19,7 +19,7 @@ export default function GoogleSignIn() {
     if (tokenId) {
       try {
         dispatch(googleSignInThunk(tokenId))
-        history.push('/home')
+        history.push('/dashboard')
       } catch (error) {
         console.log('error in login')
       }

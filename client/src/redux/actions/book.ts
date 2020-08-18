@@ -128,7 +128,7 @@ export function unBorrowBookThunk(book: Book) {
 
 export function fetchBorrowedBookThunk() {
   return async (dispatch: Dispatch) => {
-    return BookServices.getAll(dispatch)
+    return BookServices.getBorrowedBook(dispatch)
   }
 }
 

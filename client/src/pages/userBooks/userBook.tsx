@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
+import axios from 'axios';
+
 import clsx from 'clsx'
 import { useTheme } from '@material-ui/core/styles'
 import Drawer from '@material-ui/core/Drawer'
@@ -12,22 +14,27 @@ import Typography from '@material-ui/core/Typography'
 import Divider from '@material-ui/core/Divider'
 import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
-import InputBase from '@material-ui/core/InputBase'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import { Button, TableCell, TableRow, TableBody, TableHead, Table } from '@material-ui/core'
 
 
 import { unBorrowBookThunk} from '../../redux/actions'
-import {fetchBooksThunk } from '../../redux/actions'
+import {fetchBorrowedBookThunk } from '../../redux/actions'
 import { AppState } from '../../types'
 import useStyles from './style'
 
 export default function PersistentDrawerLeft() {
   const classes = useStyles()
+  const dispatch = useDispatch()
+  const history = useHistory()
   const theme = useTheme()
   const [open, setOpen] = React.useState(false)
 
   const items = useSelector((state: AppState) => state.book.inCart)
+
+ useEffect(() => {
+   dispatch(fetchBorrowedBookThunk())
+ }, [dispatch])
 
   const handleDrawerOpen = () => {
     setOpen(true)
@@ -36,8 +43,7 @@ export default function PersistentDrawerLeft() {
   const handleDrawerClose = () => {
     setOpen(false)
   }
-  const dispatch = useDispatch()
-  const history = useHistory()
+
 
   const changePageToHome = () => {
     history.push('/dashboard')

@@ -6,8 +6,8 @@ import jwt_decode from 'jwt-decode'
 
 const baseUrl = 'http://localhost:3001/api/v1/auth'
 
-const token = localStorage.signInToken
-const decodedToken = jwt_decode<StorageToken>(token)
+// const token = localStorage.signInToken
+// const decodedToken = jwt_decode<StorageToken>(token)
 
 async function GoogleSignIn(tokenId: string, dispatch: Dispatch) {
   try {
@@ -15,7 +15,7 @@ async function GoogleSignIn(tokenId: string, dispatch: Dispatch) {
     const response = await axios.post(url, {
       id_token: tokenId,
     })
-    localStorage.setItem('signInToken', response.data)
+    // localStorage.setItem('signInToken', response.data)
     dispatch(userSignIn(response.data))
 
   } catch (error) {
@@ -46,7 +46,9 @@ const  updateUser = async (user: User, dispatch: Dispatch) => {
     try{
     const response = await axios({
       method: 'PUT',
-      url: `http://localhost:3001/api/v1/users/${decodedToken.id}`,
+      // url: `http://localhost:3001/api/v1/users/${decodedToken.id}`,
+      url: 'http://localhost:3001/api/v1/users',
+
       data: user,
     })
     dispatch(userUpdate(response.data))
@@ -76,10 +78,12 @@ async function resetPassword (password: string,token: string, dispatch: Dispatch
 
 async function passwordUpdate (password: UpdatePassword, dispatch: Dispatch) {
   try{
-
+    console.log('i am bored')
     const response = await axios({
       method: 'POST',
-      url: `http://localhost:3001/api/v1/auth/updatePassword/${decodedToken.id}`, 
+      // url: `http://localhost:3001/api/v1/auth/updatePassword/${decodedToken.id}`, 
+      url: 'http://localhost:3001/api/v1/auth/updatePassword', 
+
       data: password
     })
     dispatch(resetNewPasswod(response.data))

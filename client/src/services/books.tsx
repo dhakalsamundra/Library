@@ -28,7 +28,8 @@ import jwt_decode from 'jwt-decode'
 
   
 const baseUrl = 'http://localhost:3001/api/v1/books'
-
+// const token = localStorage.signInToken
+// const decodedToken = jwt_decode<StorageToken>(token)
 
 const getAll = async (dispatch: Dispatch) => {
   try {
@@ -72,13 +73,10 @@ const updateBook = async (book: Book, dispatch: Dispatch) => {
   }
 }
 
-const token = localStorage.signInToken
-const decodedToken = jwt_decode<StorageToken>(token)
-
 const borrow = async (book: Book, dispatch: Dispatch) => {
   try {
-    const userId = decodedToken.id
-    const response = await axios({method: 'PUT', url: `${baseUrl}/${book._id}/borrow`, data: {book, userId }})
+    // const userId = decodedToken.id
+    const response = await axios({method: 'PUT', url: `${baseUrl}/${book._id}/borrow`/*, data: {book, userId }*/})
     dispatch(borrowBook(response.data))
   } catch(error) {
     console.log('this is the error', error)
@@ -87,9 +85,9 @@ const borrow = async (book: Book, dispatch: Dispatch) => {
 
 const unBorrow = async (book: Book, dispatch: Dispatch) => {
   try {
-    const url = `${baseUrl}/${book._id}/return`
-    const data = book
-    const response = await axios.put(url, data)  
+    // const userId = decodedToken.id
+
+    const response = await axios({method: 'PUT', url:`${baseUrl}/${book._id}/return` , data: { book, /*userId*/}})  
     dispatch(unBorrowBook(response.data))
   } catch (error) {
     console.log('this is the error', error)
@@ -98,8 +96,8 @@ const unBorrow = async (book: Book, dispatch: Dispatch) => {
 
 const getBorrowedBook = async (dispatch: Dispatch) => {
   try {
-    const userId = decodedToken.id
-    const response = await axios({method: 'GET', url: baseUrl + '/userBooks', data: {userId} })
+    // const userId = decodedToken.id
+    const response = await axios({method: 'GET', url: baseUrl + '/userBooks', /*data: {userId}*/ })
     dispatch(getAllUserBooks(response.data))
   } catch (error) {
     console.log(error)

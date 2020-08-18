@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
+import { GoogleLogout } from 'react-google-login'
+
 import clsx from 'clsx'
 import Drawer from '@material-ui/core/Drawer'
 import AppBar from '@material-ui/core/AppBar'
@@ -16,7 +18,7 @@ import SearchIcon from '@material-ui/icons/Search'
 import InputBase from '@material-ui/core/InputBase'
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
-import { searchBook } from '../../redux/actions/'
+import { searchBook, userSignOut } from '../../redux/actions/'
 import UserHome from '../UserHome'
 import Cart from '../BookCart'
 import useStyles from './style'
@@ -29,9 +31,6 @@ export default function NavBar() {
   const cartItems = useSelector((state: AppState) => state.book.inCart)
 
   const [toggleMenu, setToggleMenu] = useState(false)
-  const menuToggle = () => {
-    setToggleMenu((prevTog) => !prevTog)
-  }
 
   const [cartCount, setCartCount] = useState(0)
   useEffect(() => {
@@ -58,6 +57,16 @@ export default function NavBar() {
 
   // I will dispatch action to seachCountries from here using useDispatch
 
+  const responseLogout = () => {
+    try {
+      dispatch(userSignOut())
+      localStorage.removeItem('signIn-token')
+        history.push('/')
+    } catch (error) {
+      alert('Logout failed')
+    }
+  }
+  
   return (
     <div className={classes.root}>
       <AppBar
@@ -110,6 +119,15 @@ export default function NavBar() {
           ) : (
             <div></div>
           )}
+          <Typography style={{ marginLeft: 'auto' }}>
+            <GoogleLogout
+              clientId="803700323785-2sld48q8at5i7v2rhj4s57d9gc294j42.apps.googleusercontent.com"
+              buttonText="LogOut"
+              // on googlelogout onsuccess is not the correct one, it will showa the runtime error.onLogoutSuccess is the right one.
+              onLogoutSuccess={responseLogout}
+              onFailure={responseLogout}
+            />
+          </Typography>
         </Toolbar>
       </AppBar>
       <Drawer
