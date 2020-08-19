@@ -7,6 +7,7 @@ import {
   BadRequestError,
   InternalServerError,
 } from '../helpers/apiError'
+import User from '../models/User'
 
 export const createBook = async (
   req: Request,
@@ -59,40 +60,6 @@ export const updateBook = async (
     next(new NotFoundError('Book not found', error))
   }
 }
-
-// export const getFilteredByQueryInput = async (
-//   req: Request,
-//   res: Response,
-//   next: NextFunction
-// ) => {
-//   const value = req.params.filterValue
-//   const filteredQuery = req.query.filter
-//   try {
-//     if (value === 'title') {
-//       const data = await BookService.filteredByQuery(value, filteredQuery)
-//       res.json(data)
-//     }
-//     if (value === 'author') {
-//       const data = await BookService.filteredByQuery(value, filteredQuery)
-//       res.json(data)
-//     }
-//     if (value === 'status') {
-//       const data = await BookService.filteredByQuery(value, filteredQuery)
-//       res.json(data)
-//     }
-//     if (value === 'genres') {
-//       const data = await BookService.filteredByQuery(value, filteredQuery)
-//       res.json(data)
-//     }
-//     if (value === 'ISBN') {
-//       const data = await BookService.filteredByQuery(value, filteredQuery)
-//       res.json(data)
-//     }
-//     res.send('Invalid input for query filtered.')
-//   } catch (error) {
-//     next(new NotFoundError('Book not found', error))
-//   }
-// }
 
 export const getFilteredByQueryInput = async (
   req: Request,
@@ -151,10 +118,12 @@ export async function borrowBook(
   next: NextFunction
 ) {
   try {
-    const userId = req.body.userId
+    const user = await User.findById(req.body.userId)
     const { bookId } = req.params
-    const bookBorrowed = await BookService.borrowBook(bookId, userId)
-    res.json(bookBorrowed)
+    if (user) {
+      const bookBorrowed = await BookService.borrowBook(bookId, user)
+      res.json(bookBorrowed)
+    }
   } catch (error) {
     next(new NotFoundError(error))
   }
@@ -167,13 +136,29 @@ export const returnBook = async (
 ) => {
   try {
     const { bookId } = req.params
-    const returnedBook = await BookService.returnBook(bookId)
-    res.json(returnedBook)
+    const book = await BookService.returnBook(bookId)
+    if (book) {
+      res.json(book)
+    }
   } catch (error) {
     if (error.statusCode === 400) {
       next(new BadRequestError(error))
     } else {
       next(new NotFoundError(error))
     }
+  }
+}
+// testing functionality. TODO in better way...
+export const showUserBooks = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const userId = req.body
+    const userBooks = await Book.find({ borrowerId: userId })
+    res.json(userBooks)
+  } catch (error) {
+    next(new InternalServerError('Internal Server Error', error))
   }
 }

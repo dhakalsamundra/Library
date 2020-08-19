@@ -15,6 +15,18 @@ export const findAllUser = async (
   }
 }
 
+export const findAllBook = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    res.json(await UserService.findAllBook())
+  } catch (error) {
+    next(new NotFoundError('Book not found', error))
+  }
+}
+
 export const updateUser = async (
   req: Request,
   res: Response,
