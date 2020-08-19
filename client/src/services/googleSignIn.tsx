@@ -6,16 +6,13 @@ import jwt_decode from 'jwt-decode'
 
 const baseUrl = 'http://localhost:3001/api/v1/auth'
 
-// const token = localStorage.signInToken
-// const decodedToken = jwt_decode<StorageToken>(token)
-
 async function GoogleSignIn(tokenId: string, dispatch: Dispatch) {
   try {
     const url = baseUrl + '/google'
     const response = await axios.post(url, {
       id_token: tokenId,
     })
-    // localStorage.setItem('signInToken', response.data)
+    localStorage.setItem('signInToken', response.data)
     dispatch(userSignIn(response.data))
 
   } catch (error) {
@@ -44,14 +41,16 @@ async function signInUser (user: SignIn, dispatch: Dispatch) {
 
 const  updateUser = async (user: User, dispatch: Dispatch) => {
     try{
-    const response = await axios({
-      method: 'PUT',
-      // url: `http://localhost:3001/api/v1/users/${decodedToken.id}`,
-      url: 'http://localhost:3001/api/v1/users',
-
-      data: user,
-    })
-    dispatch(userUpdate(response.data))
+      if(localStorage.signInToken) {
+        const token = localStorage.signInToken
+        const decodedToken = jwt_decode<StorageToken>(token)
+        const response = await axios({
+          method: 'PUT',
+          url: `http://localhost:3001/api/v1/users/${decodedToken.id}`,    
+          data: user,
+        })
+        dispatch(userUpdate(response.data))
+      }
   } catch (error) {
     console.log('this is the error', error)
   }
@@ -78,16 +77,16 @@ async function resetPassword (password: string,token: string, dispatch: Dispatch
 
 async function passwordUpdate (password: UpdatePassword, dispatch: Dispatch) {
   try{
-    console.log('i am bored')
-    const response = await axios({
+    if(localStorage.signInToken) {
+      const token = localStorage.signInToken
+      const decodedToken = jwt_decode<StorageToken>(token)    
+      const response = await axios({
       method: 'POST',
-      // url: `http://localhost:3001/api/v1/auth/updatePassword/${decodedToken.id}`, 
-      url: 'http://localhost:3001/api/v1/auth/updatePassword', 
-
+      url: `http://localhost:3001/api/v1/auth/updatePassword/${decodedToken.id}`, 
       data: password
     })
     dispatch(resetNewPasswod(response.data))
-    console.log('update password', response.data)
+  }
   } catch(error){
     console.log(error)
   }
