@@ -2,6 +2,7 @@ import mongoose, { Document } from 'mongoose'
 import crypto from 'crypto'
 
 export type UserDocument = Document & {
+  id?: string;
   firstName: string;
   lastName: string;
   email: string;
@@ -9,6 +10,7 @@ export type UserDocument = Document & {
   picture?: string;
   password: string;
   role: string;
+  books: string[];
   resetPasswordExpires?: number;
   resetPasswordToken?: string;
   generatePasswordReset: Function;
@@ -44,6 +46,12 @@ const userSchema = new mongoose.Schema({
     enum: ['superadmin', 'admin', 'user'],
     default: 'user',
   },
+  books: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Book',
+    },
+  ],
   resetPasswordToken: {
     type: String,
     required: false,

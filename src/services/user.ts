@@ -15,6 +15,10 @@ async function findAll(): Promise<UserDocument[]> {
   return User.find().sort({ firstName: 1 }).exec()
 }
 
+// async function findAllBook(): Promise<UserDocument[]> {
+//   return
+// }
+
 function update(
   userId: string,
   update: Partial<UserDocument>
@@ -50,4 +54,5 @@ export default {
   deleteUser,
   findById,
   update,
+  // findAllBook
 }

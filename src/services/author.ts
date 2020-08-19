@@ -39,8 +39,8 @@ function update(
       if (update.dateOfBirth) {
         author.dateOfBirth = update.dateOfBirth
       }
-      if (update.book) {
-        author.book = update.book
+      if (update.books) {
+        author.books = update.books
       }
       return author.save()
     })

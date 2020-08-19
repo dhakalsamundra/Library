@@ -103,7 +103,6 @@ export const UpdatePassword = async (
     const { oldPassword, newPassword } = req.body.data as {
       oldPassword: string;
       newPassword: string;
-      confirmNewPassword: string;
     }
     const user = await User.findById(req.params.userId)
     if (user) {

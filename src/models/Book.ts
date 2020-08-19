@@ -1,5 +1,4 @@
 import mongoose, { Document } from 'mongoose'
-
 type Status = 'available' | 'borrowed'
 
 export type BookDocument = Document & {
@@ -22,12 +21,14 @@ const bookSchema = new mongoose.Schema({
     index: true,
     required: true,
   },
-  author: {
-    type: String,
-    required: true,
-  },
+  author: [
+    {
+      type: String,
+      required: true,
+    },
+  ],
   borrowerId: {
-    type: mongoose.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
   },
   borrowedDate: {

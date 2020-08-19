@@ -1,10 +1,7 @@
 import Book, { BookDocument } from '../models/Book'
 import UserService from '../services/user'
-import {
-  BadRequestError,
-  NotFoundError,
-  InternalServerError,
-} from '../helpers/apiError'
+import { UserDocument } from '../models/User'
+import { BadRequestError } from '../helpers/apiError'
 
 function create(book: BookDocument): Promise<BookDocument> {
   return book.save()
@@ -13,6 +10,7 @@ function create(book: BookDocument): Promise<BookDocument> {
 async function findAll(): Promise<BookDocument[]> {
   return Book.find().sort({ title: 1, publishedDate: -1 }).exec()
 }
+
 type queryPayload = {
   title?: string;
   status?: string;
@@ -100,7 +98,10 @@ function deleteBook(bookId: string): Promise<BookDocument | null> {
   return Book.findByIdAndDelete(bookId).exec()
 }
 
-function borrowBook(bookId: string, userId: string): Promise<BookDocument> {
+function borrowBook(
+  bookId: string,
+  userId: string
+): Promise<BookDocument | null> {
   return Book.findById(bookId)
     .exec()
     .then(async (book) => {
