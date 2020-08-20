@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import {useSnackbar} from 'notistack'
+
 import {
   TableHead,
   TableRow,
@@ -17,6 +19,7 @@ import AuthorUpdate from '../UpdateAuthor'
 export default function AuthorTable() {
   const items = useSelector((state: AppState) => state.author.items)
   const dispatch = useDispatch()
+  const { enqueueSnackbar} = useSnackbar()
 
   useEffect(() => {
     dispatch(fetchAuthorsThunk())
@@ -24,6 +27,8 @@ export default function AuthorTable() {
 
   const handleDelete = (id: string) => {
     const item = items.find((author) => author._id === id)
+    enqueueSnackbar('Author has been deleted', { variant: 'success'})
+
     if (item) {
       dispatch(deleteAuthorThunk(item))
     }
