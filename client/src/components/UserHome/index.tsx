@@ -1,4 +1,7 @@
+
 import React from 'react'
+import {useSnackbar} from 'notistack'
+
 import { useSelector, useDispatch } from 'react-redux'
 import {
   TableHead,
@@ -15,10 +18,12 @@ import { AppState } from '../../types'
 export default function BookTable() {
   const items = useSelector((state: AppState) => state.book.items)
   const dispatch = useDispatch()
+  const { enqueueSnackbar} = useSnackbar()
 
 
   const handleBorrowChange = (id: string) => {
     const item = items.find((book) => book._id === id)
+    enqueueSnackbar('Borrowing book successful', { variant: 'success'})
     if (item) {
       dispatch(borrowBookThunk(item))
     }
