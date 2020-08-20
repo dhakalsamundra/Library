@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import {useSnackbar} from 'notistack'
+
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 import Dialog from '@material-ui/core/Dialog'
@@ -19,6 +21,7 @@ export type UpdateAuthorProp = {
 export default function AddAuthor({ author }: UpdateAuthorProp) {
 
   const [open, setOpen] = useState(false)
+  const { enqueueSnackbar} = useSnackbar()
   const [newFirstName, setNewFirstName] = useState(author.firstName)
   const [newLastName, setNewLastName] = useState(author.lastName)
   const [newDateOfBirth] = useState(author.dateOfBirth)
@@ -56,6 +59,7 @@ export default function AddAuthor({ author }: UpdateAuthorProp) {
         dateOfBirth: newDateOfBirth,
         book: newBook,
       }
+      enqueueSnackbar('Update Successful', { variant: 'success'})
       dispatch(editAuthorThunk(updatedAuthor))
     }
   }
