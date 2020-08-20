@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import {useSnackbar} from 'notistack'
+
 import {
   TableHead,
   TableRow,
@@ -15,6 +17,7 @@ import UpdateBook from '../updateBook'
 
 export default function BookTable() {
   const items = useSelector((state: AppState) => state.book.items)
+  const { enqueueSnackbar} = useSnackbar()
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(fetchBooksThunk())
@@ -24,6 +27,7 @@ export default function BookTable() {
     const item = items.find((book) => book._id === id)
     if (item) {
       dispatch(deleteBookThunk(item))
+      enqueueSnackbar('Book Deleted', {variant: 'success'})
     }
   }
   return (
