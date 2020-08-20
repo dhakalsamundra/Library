@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
+import {useSnackbar} from 'notistack'
+
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 import Dialog from '@material-ui/core/Dialog'
@@ -18,6 +20,7 @@ export type UpdateBookProps = {
 
 export default function UpdateBook({ book }: UpdateBookProps) {
   const [open, setOpen] = useState(false)
+  const { enqueueSnackbar} = useSnackbar()
   const [newTitle, setNewTitle] = useState(book.title)
   const [newISBN] = useState(book.ISBN)
   const [newPublishedDate, setNewPublishedDate] = useState(book.publishedDate)
@@ -71,7 +74,7 @@ export default function UpdateBook({ book }: UpdateBookProps) {
         publisher: newPublisher,
         genres: newGenres,
       }
-      console.log('this is the updated book', updateBook)
+      enqueueSnackbar('Book Update Successful', { variant: 'success'})
       dispatch(editBookThunk(updateBook))
     }
   }
