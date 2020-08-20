@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
+import {useSnackbar} from 'notistack'
+
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios';
 
@@ -26,6 +28,7 @@ import useStyles from './style'
 export default function PersistentDrawerLeft() {
   const classes = useStyles()
   const dispatch = useDispatch()
+  const { enqueueSnackbar} = useSnackbar()
   const history = useHistory()
   const theme = useTheme()
   const [open, setOpen] = React.useState(false)
@@ -51,6 +54,7 @@ export default function PersistentDrawerLeft() {
 
   const handleUnBorrowChange = (id: string) => {
     const item = items.find((book) => book._id === id)
+    enqueueSnackbar('returning book successful', { variant: 'success'})
     if (item) {
         dispatch(unBorrowBookThunk(item))
       } 
