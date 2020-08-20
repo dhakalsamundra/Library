@@ -4,7 +4,7 @@ export type AuthorDocument = Document & {
   firstName: string;
   lastName: string;
   dateOfBirth: Date | string;
-  books: string[];
+  books: string;
 }
 
 const authorSchema = new mongoose.Schema({
