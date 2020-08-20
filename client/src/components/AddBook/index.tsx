@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import {useSnackbar} from 'notistack'
+
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 import Dialog from '@material-ui/core/Dialog'
@@ -13,6 +15,7 @@ import { addBookThunk } from '../../redux/actions'
 
 export default function BookForm() {
   const [open, setOpen] = useState(false)
+  const { enqueueSnackbar} = useSnackbar()
   const [newTitle, setNewTitle] = useState('')
   const [newISBN, setNewISBN] = useState('')
   const [newPublishedDate, setNewPublishedDate] = useState('')
@@ -69,6 +72,8 @@ export default function BookForm() {
       publisher: newPublisher,
       genres: newGenres,
     }
+    enqueueSnackbar('New Book has been added', { variant: 'success'})
+
     if (typeof items !== 'undefined') {
       dispatch(addBookThunk(newBook))
       setNewTitle('')
