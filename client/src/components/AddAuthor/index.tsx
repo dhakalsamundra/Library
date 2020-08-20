@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import {useSnackbar} from 'notistack'
+
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 import Dialog from '@material-ui/core/Dialog'
@@ -13,6 +15,7 @@ import { addAuthorThunk } from '../../redux/actions/author'
 
 export default function AddAuthor() {
   const [open, setOpen] = useState(false)
+  const { enqueueSnackbar} = useSnackbar()
   const [newFirstName, setNewFirstName] = useState('')
   const [newLastName, setNewLastName] = useState('')
   const [newDateOfBirth, setNewDateOfBirth] = useState('')
@@ -50,7 +53,8 @@ export default function AddAuthor() {
       dateOfBirth: newDateOfBirth,
       book: newBook,
     }
-
+    enqueueSnackbar('New Author has been added', { variant: 'success'})
+    console.log('new author', newAuthor)
     if (typeof authors !== 'undefined') {
       dispatch(addAuthorThunk(newAuthor))
       setNewFirstName('')
